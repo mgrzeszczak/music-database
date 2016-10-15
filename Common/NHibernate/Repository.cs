@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Common.NHibernate
 {
-    public abstract class Repository<T, ID>
+    public abstract class Repository<T, ID> where T : class
     {
     
         protected ISession getSession()
@@ -34,6 +34,11 @@ namespace Common.NHibernate
         public void delete(T entity)
         {
             getSession().Delete(entity);
+        }
+
+        public IQueryable<T> query()
+        {
+            return getSession().QueryOver<T>().List<T>().AsQueryable<T>();
         }
 
     }

@@ -1,7 +1,7 @@
 ﻿using Common.Model;
 using Common.NHibernate;
 
-namespace Common.Repository
+namespace Backend.Repository
 {
     public class SongRepository : Repository<Song,long>
     {

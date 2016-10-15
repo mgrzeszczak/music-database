@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Common.NHibernate
 {
-
     public class Context
     {
         private static ThreadLocal<IUnitOfWork> currentUnitOfWork = new ThreadLocal<IUnitOfWork>();
