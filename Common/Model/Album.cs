@@ -10,5 +10,9 @@ namespace Common.Model
     {
         public virtual long Id { get; set; }
         public virtual string Name { get; set; }
+        public virtual IList<Song> Songs { get; set; }
+        public virtual int Number { get; set; }
+        public virtual string CoverUrl { get; set; }
+        public virtual Artist artist { get; set; }
     }
 }
