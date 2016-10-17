@@ -12,5 +12,7 @@ namespace Desktop.Communication
         IList<Song> searchSongs(string searchText);
         IList<Artist> searchArtists(string searchText);
         IList<Album> searchAlbums(string searchText);
+        Artist saveArtist(Artist artist);
+        Album saveAlbum(Album album);
     }
 }

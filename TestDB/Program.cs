@@ -15,8 +15,25 @@ namespace TestDB
         static void Main(string[] args)
         {
             BackendDataProvider backendDataProvider = new BackendDataProvider();
-            IList<Song> list = backendDataProvider.searchSongs("that");
-            Console.WriteLine(list.Count);
+            Artist artist1 = new Artist();
+            artist1.Name = "Kings of Leon";
+
+            Artist artist2 = new Artist();
+            artist2.Name = "Coldplay";
+
+            artist1 = backendDataProvider.saveArtist(artist1);
+            artist2 = backendDataProvider.saveArtist(artist2);
+
+            Album album1 = new Album();
+            album1.Name = "Hello world!";
+            album1.Artist = artist1;
+
+            Album album2 = new Album();
+            album2.Name = "Hello world!";
+            album2.Artist = artist2;
+
+            backendDataProvider.saveAlbum(album1);
+            backendDataProvider.saveAlbum(album2);
         }
     }
 }

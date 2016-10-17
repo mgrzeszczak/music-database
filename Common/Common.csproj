@@ -58,17 +58,21 @@
     <Compile Include="Exception\SystemException.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
+    <Compile Include="Model\Constraints\AlbumConstraints.cs" />
+    <Compile Include="Model\Constraints\ArtistConstraints.cs" />
+    <Compile Include="Model\Constraints\SongConstraints.cs" />
     <Compile Include="Model\Song.cs" />
-    <Compile Include="NHibernate\Context.cs" />
+    <Compile Include="Scope\Context.cs" />
     <Compile Include="NHibernate\Repository.cs" />
     <Compile Include="NHibernate\StoreConfiguration.cs" />
-    <Compile Include="NHibernate\UnitOfWork.cs" />
+    <Compile Include="Scope\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -13,6 +13,6 @@ namespace Common.Model
         public virtual IList<Song> Songs { get; set; }
         public virtual int Number { get; set; }
         public virtual string CoverUrl { get; set; }
-        public virtual Artist artist { get; set; }
+        public virtual Artist Artist { get; set; }
     }
 }

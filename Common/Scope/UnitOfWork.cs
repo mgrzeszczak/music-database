@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.NHibernate
+namespace Common.Scope
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -17,17 +17,17 @@ namespace Common.NHibernate
 
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ISessionFactory _sessionFactory;
-        private readonly ITransaction _transaction;
+        private readonly ISessionFactory sessionFactory;
+        private readonly ITransaction transaction;
 
         public ISession Session { get; private set; }
 
         public UnitOfWork(ISessionFactory sessionFactory)
         {
-            _sessionFactory = sessionFactory;
-            Session = _sessionFactory.OpenSession();
-            Session.FlushMode = FlushMode.Auto;
-            _transaction = Session.BeginTransaction(IsolationLevel.ReadCommitted);
+            this.sessionFactory = sessionFactory;
+            this.Session = sessionFactory.OpenSession();
+            this.Session.FlushMode = FlushMode.Auto;
+            this.transaction = Session.BeginTransaction(IsolationLevel.ReadCommitted);
         }
 
         public void Dispose()
@@ -37,18 +37,18 @@ namespace Common.NHibernate
 
         public void Commit()
         {
-            if (!_transaction.IsActive)
+            if (!transaction.IsActive)
             {
                 throw new InvalidOperationException("No active transation");
             }
-            _transaction.Commit();
+            transaction.Commit();
         }
 
         public void Rollback()
         {
-            if (_transaction.IsActive)
+            if (transaction.IsActive)
             {
-                _transaction.Rollback();
+                transaction.Rollback();
             }
         }
     }

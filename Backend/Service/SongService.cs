@@ -19,5 +19,11 @@ namespace Backend.Service
             return songRepository.query().Where(s => s.Title.Contains(text)).ToList();
         }
 
+        public void update(Song song)
+        {
+            this.songRepository.update(song);
+        }
+        
+
     }
 }

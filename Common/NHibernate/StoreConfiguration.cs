@@ -11,7 +11,7 @@ namespace Common.NHibernate
     {
         public override bool ShouldMap(Type type)
         {
-            return type.Namespace == "Common.Model";
+            return type.Namespace=="Common.Model";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using Common.Scope;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,16 @@ namespace Common.NHibernate
         public IQueryable<T> query()
         {
             return getSession().QueryOver<T>().List<T>().AsQueryable<T>();
+        }
+
+        public void update(T entity)
+        {
+            getSession().Update(entity);
+        }
+
+        public IList<T> page<TKey>(int pageNr,int amountPerPage, Func<T,TKey> keyMapper, IComparer<TKey> comparator)
+        {
+            return query().OrderBy(keyMapper, comparator).Skip((pageNr - 1) * amountPerPage).Take(amountPerPage).ToList();
         }
 
     }

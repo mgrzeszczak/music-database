@@ -1,4 +1,7 @@
 ﻿using Backend.Repository;
+using Common.Model;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Backend.Service
 {
@@ -10,5 +13,21 @@ namespace Backend.Service
         {
             this.albumRepository = albumRepository;
         }
+
+        public IList<Album> searchAlbums(string text)
+        {
+            return this.albumRepository.query().Where(s => s.Name.Contains(text)).ToList();
+        }
+
+        public void update(Album album)
+        {
+            this.albumRepository.update(album);
+        }
+
+        public Album save(Album album)
+        {
+            return this.albumRepository.save(album);
+        }
+
     }
 }

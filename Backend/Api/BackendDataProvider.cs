@@ -10,6 +10,8 @@ using FluentNHibernate.Automapping;
 using Common.Model;
 using System;
 using System.Collections.Generic;
+using Common.Scope;
+using Common.Model.Constraints;
 
 namespace Desktop.Communication
 {
@@ -36,7 +38,8 @@ namespace Desktop.Communication
             var fluentConfig = Fluently.Configure().Database(
              MySQLConfiguration.Standard.ConnectionString(
                  c => c.Is("Server=localhost;Database=lyrics;User=root;Password=root;")))
-             .Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Song>(storeCfg)))
+             .Mappings(m => 
+                m.AutoMappings.Add(AutoMap.AssemblyOf<Song>(storeCfg).UseOverridesFromAssemblyOf<SongConstraints>()))
              .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
             var conf = fluentConfig.BuildConfiguration();
             this.sessionFactory = conf.BuildSessionFactory();
@@ -52,10 +55,10 @@ namespace Desktop.Communication
                 unitOfWork.Commit();
                 return ret;
             }
-            catch (BusinessException e)
+            catch (Exception e)
             {
                 unitOfWork.Rollback();
-                throw e;
+                throw new BusinessException(e.Message);
             }
         }
 
@@ -66,12 +69,23 @@ namespace Desktop.Communication
 
         public IList<Artist> searchArtists(string searchText)
         {
-            throw new NotImplementedException();
+            return wrapInUnitOfWork(() => artistService.searchArtists(searchText));
         }
 
         public IList<Album> searchAlbums(string searchText)
         {
-            throw new NotImplementedException();
+            return wrapInUnitOfWork(() => albumService.searchAlbums(searchText));
         }
+
+        public Album saveAlbum(Album album)
+        {
+            return wrapInUnitOfWork(() => albumService.save(album));
+        }
+
+        public Artist saveArtist(Artist artist)
+        {
+            return wrapInUnitOfWork(() => artistService.save(artist));
+        }
+        
     }
 }
