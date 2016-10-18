@@ -58,7 +58,7 @@ namespace Backend.Repository
         public IList<T> SearchBy(string searchText, Func<T, string> searchParameterMapper, int pageNr, int amountPerPage)
         {
             return Page(pageNr,amountPerPage,searchParameterMapper,StringComparer.Ordinal,Queryable()
-                .Where(t => searchParameterMapper(t).Contains(searchText)));
+                .Where(t => searchParameterMapper(t).ToUpper().Contains(searchText.ToUpper())));
         }
     }
 
