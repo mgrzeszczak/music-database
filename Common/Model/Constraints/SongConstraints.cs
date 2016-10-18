@@ -12,8 +12,8 @@ namespace Common.Model.Constraints
     {
         public void Override(AutoMapping<Song> mapping)
         {
-            mapping.Map(s => s.Title).UniqueKey("ALBUM_SONG");
-            mapping.References(s => s.Album).UniqueKey("ALBUM_SONG");
+            mapping.Map(s => s.Title).UniqueKey("ALBUM_SONG").Not.Nullable();
+            mapping.References(s => s.Album).UniqueKey("ALBUM_SONG").Not.Nullable();
         }
     }
 }

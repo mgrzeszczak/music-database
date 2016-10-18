@@ -31,6 +31,8 @@ namespace Backend.Service
             return this.repository.Save(t);
         }
 
+        public abstract IList<T> SearchBy(string searchText, int pageNr, int amountPerPage);
+
         public void Update(T t)
         {
             this.repository.Update(t);

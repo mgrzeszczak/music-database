@@ -10,7 +10,8 @@ namespace Backend.Config
     {
 
         public static readonly string ConnectionString = "Server=localhost;Database=lyrics;User=root;Password=root;";
-
+        public static readonly int DefaultAmountPerPage = 50;
+        public static readonly int DefaultPageNumber = 1;
 
     }
 }

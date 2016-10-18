@@ -9,7 +9,7 @@ namespace Common.Model.Constraints
         public void Override(AutoMapping<Artist> mapping)
         {
             mapping.Map(a => a.Genre).CustomType<Genre>();
-            mapping.Map(a => a.Name).Unique();
+            mapping.Map(a => a.Name).Unique().Not.Nullable();
         }
     }
 }

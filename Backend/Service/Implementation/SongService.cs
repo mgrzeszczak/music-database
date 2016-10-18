@@ -2,6 +2,7 @@
 using Common.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Backend.Service
 {
@@ -11,18 +12,10 @@ namespace Backend.Service
         {
             
         }
-        /*
-        public IList<Song> searchSongs(string text)
-        {
-            return repository.Queryable().Where(s => s.Title.Contains(text)).ToList();
-        }
 
-        public void update(Song song)
+        public override IList<Song> SearchBy(string searchText, int pageNr, int amountPerPage)
         {
-            this.songRepository.update(song);
+            return repository.SearchBy(searchText, s => s.Title, pageNr, amountPerPage);
         }
-        */
-        
-
     }
 }

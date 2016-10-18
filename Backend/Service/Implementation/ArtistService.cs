@@ -2,6 +2,7 @@
 using Common.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Backend.Service
 {
@@ -13,26 +14,9 @@ namespace Backend.Service
                     
         }
 
-        /*private ArtistRepository artistRepository;
-
-        public ArtistService(ArtistRepository artistRepository)
+        public override IList<Artist> SearchBy(string searchText, int pageNr, int amountPerPage)
         {
-            this.artistRepository = artistRepository;
+            return repository.SearchBy(searchText, a => a.Name, pageNr, amountPerPage);
         }
-
-        public IList<Artist> searchArtists(string text)
-        {
-            return artistRepository.query().Where(s => s.Name.Contains(text)).ToList();
-        }
-
-        public void update(Artist artist)
-        {
-            this.artistRepository.update(artist);
-        }
-
-        public Artist save(Artist artist)
-        {
-            return this.artistRepository.save(artist);
-        }*/
     }
 }

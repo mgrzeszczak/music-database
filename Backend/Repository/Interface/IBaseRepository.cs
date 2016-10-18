@@ -11,6 +11,7 @@ namespace Backend.Repository
         T Save(T entity);
         void Update(T entity);
         void Delete(T entity);
-        IList<T> Page<TKey>(int pageNr, int amountPerPage, Func<T, TKey> keyMapper, IComparer<TKey> comparator);
+        IList<T> SearchBy(string searchText, Func<T, string> searchParameterMapper,int pageNr, int amountPerPage);
+
     }
 }

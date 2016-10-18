@@ -2,6 +2,7 @@
 using Common.Model;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Backend.Service
 {
@@ -12,28 +13,9 @@ namespace Backend.Service
 
         }
 
-        /*
-        private AlbumRepository albumRepository;
-
-        public AlbumService(AlbumRepository albumRepository)
+        public override IList<Album> SearchBy(string searchText, int pageNr, int amountPerPage)
         {
-            this.albumRepository = albumRepository;
+            return repository.SearchBy(searchText, a => a.Name, pageNr, amountPerPage);
         }
-
-        public IList<Album> searchAlbums(string text)
-        {
-            return this.albumRepository.query().Where(s => s.Name.Contains(text)).ToList();
-        }
-
-        public void update(Album album)
-        {
-            this.albumRepository.update(album);
-        }
-
-        public Album save(Album album)
-        {
-            return this.albumRepository.save(album);
-        }*/
-
     }
 }

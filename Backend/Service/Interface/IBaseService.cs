@@ -14,6 +14,6 @@ namespace Backend.Service
         void Delete(T t);
         void Update(T t);
         T FindById(ID id);
-
+        IList<T> SearchBy(string searchText, int pageNr, int amountPerPage);
     }
 }

@@ -12,7 +12,7 @@ namespace Common.Model
     {
         public virtual string Name { get; set; }
         public virtual IList<Album> Albums { get; set; }
-        public virtual string ImagePath { get; set; }
+        public virtual string ImageUrl { get; set; }
         public virtual Genre Genre { get; set; }
     }
 }

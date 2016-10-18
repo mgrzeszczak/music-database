@@ -45,11 +45,21 @@ namespace Backend.Repository
             return GetSession().QueryOver<T>().List<T>().AsQueryable<T>();
         }
 
-        public IList<T> Page<TKey>(int pageNr,int amountPerPage, Func<T,TKey> keyMapper, IComparer<TKey> comparator)
+        protected IList<T> Page<TKey>(int pageNr,int amountPerPage, Func<T,TKey> keyMapper, IComparer<TKey> comparator)
         {
-            return Queryable().OrderBy(keyMapper, comparator).Skip((pageNr - 1) * amountPerPage).Take(amountPerPage).ToList();
+            return Page(pageNr, amountPerPage, keyMapper, comparator, Queryable());
         }
 
+        protected IList<T> Page<TKey>(int pageNr, int amountPerPage, Func<T, TKey> keyMapper, IComparer<TKey> comparator, IQueryable<T> queryable)
+        {
+            return queryable.OrderBy(keyMapper, comparator).Skip((pageNr - 1) * amountPerPage).Take(amountPerPage).ToList();
+        }
+
+        public IList<T> SearchBy(string searchText, Func<T, string> searchParameterMapper, int pageNr, int amountPerPage)
+        {
+            return Page(pageNr,amountPerPage,searchParameterMapper,StringComparer.Ordinal,Queryable()
+                .Where(t => searchParameterMapper(t).Contains(searchText)));
+        }
     }
 
 }

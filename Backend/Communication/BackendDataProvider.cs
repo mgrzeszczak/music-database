@@ -80,19 +80,19 @@ namespace Backend.Communication
             }   
         }
 
-        public IList<Song> SearchSongsByTitle(string searchText)
+        public IList<Song> SearchSongsByTitle(string searchText, int pageNr, int amountPerPage)
         {
-            throw new NotImplementedException();
+            return this.WrapInUnitOfWork(() =>this.songService.SearchBy(searchText,pageNr,amountPerPage));
         }
 
-        public IList<Artist> SearchArtistsByName(string searchText)
+        public IList<Artist> SearchArtistsByName(string searchText, int pageNr, int amountPerPage)
         {
-            throw new NotImplementedException();
+            return this.WrapInUnitOfWork(() => this.artistService.SearchBy(searchText, pageNr, amountPerPage));
         }
 
-        public IList<Album> SearchAlbumsByName(string searchText)
+        public IList<Album> SearchAlbumsByName(string searchText, int pageNr, int amountPerPage)
         {
-            throw new NotImplementedException();
+            return this.WrapInUnitOfWork(() => this.albumService.SearchBy(searchText, pageNr, amountPerPage));
         }
 
         public Song SaveSong(Song song)
@@ -110,5 +110,34 @@ namespace Backend.Communication
             return this.WrapInUnitOfWork(() => albumService.Save(album));
         }
 
+        public void UpdateSong(Song song)
+        {
+            this.WrapInUnitOfWork<Object>(() => { songService.Update(song); return null; });
+        }
+
+        public void UpdateAlbum(Album album)
+        {
+            this.WrapInUnitOfWork<Object>(() => { albumService.Update(album); return null; });
+        }
+
+        public void UpdateArtist(Artist artist)
+        {
+            this.WrapInUnitOfWork<Object>(() => { artistService.Update(artist); return null; });
+        }
+
+        public void DeleteSong(Song song)
+        {
+            this.WrapInUnitOfWork<Object>(() => { songService.Delete(song); return null; });
+        }
+
+        public void DeleteAlbum(Album album)
+        {
+            this.WrapInUnitOfWork<Object>(() => { albumService.Delete(album); return null; });
+        }
+
+        public void DeleteArtist(Artist artist)
+        {
+            this.WrapInUnitOfWork<Object>(() => { artistService.Delete(artist); return null; });
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Backend.Communication;
+using Common.Communication;
 using Common.Model;
 
 namespace TestDB
@@ -7,7 +8,8 @@ namespace TestDB
     {
         static void Main(string[] args)
         {
-            BackendDataProvider backendDataProvider = new BackendDataProvider();
+            IDataProvider backendDataProvider = new BackendDataProvider();
+            
             Song song = new Song();
             song.Title = "You Don't Fool Me";
             backendDataProvider.SaveSong(song);
