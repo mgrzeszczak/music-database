@@ -5,8 +5,14 @@ using System.Linq;
 
 namespace Backend.Service
 {
-    public class AlbumService
+    public class AlbumService : BaseService<Album,long,IAlbumRepository>, IAlbumService
     {
+        public AlbumService(IAlbumRepository repository) : base(repository)
+        {
+
+        }
+
+        /*
         private AlbumRepository albumRepository;
 
         public AlbumService(AlbumRepository albumRepository)
@@ -27,7 +33,7 @@ namespace Backend.Service
         public Album save(Album album)
         {
             return this.albumRepository.save(album);
-        }
+        }*/
 
     }
 }

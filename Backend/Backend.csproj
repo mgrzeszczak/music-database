@@ -64,14 +64,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\BackendDataProvider.cs" />
+    <Compile Include="Communication\BackendDataProvider.cs" />
+    <Compile Include="Config\DatabaseConfig.cs" />
+    <Compile Include="Config\ModelConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\AlbumRepository.cs" />
-    <Compile Include="Repository\ArtistRepository.cs" />
-    <Compile Include="Repository\SongRepository.cs" />
-    <Compile Include="Service\AlbumService.cs" />
-    <Compile Include="Service\ArtistService.cs" />
-    <Compile Include="Service\SongService.cs" />
+    <Compile Include="Repository\Implementation\AlbumRepository.cs" />
+    <Compile Include="Repository\Implementation\ArtistRepository.cs" />
+    <Compile Include="Repository\Implementation\BaseRepository.cs" />
+    <Compile Include="Repository\Interface\IAlbumRepository.cs" />
+    <Compile Include="Repository\Interface\IArtistRepository.cs" />
+    <Compile Include="Repository\Interface\IBaseRepository.cs" />
+    <Compile Include="Repository\Interface\ISongRepository.cs" />
+    <Compile Include="Repository\Implementation\SongRepository.cs" />
+    <Compile Include="Service\Implementation\AlbumService.cs" />
+    <Compile Include="Service\Implementation\ArtistService.cs" />
+    <Compile Include="Service\Implementation\BaseService.cs" />
+    <Compile Include="Service\Implementation\SongService.cs" />
+    <Compile Include="Service\Interface\IAlbumService.cs" />
+    <Compile Include="Service\Interface\IArtistService.cs" />
+    <Compile Include="Service\Interface\IBaseService.cs" />
+    <Compile Include="Service\Interface\ISongService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

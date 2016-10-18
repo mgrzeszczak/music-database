@@ -5,24 +5,23 @@ using System.Linq;
 
 namespace Backend.Service
 {
-    public class SongService
+    public class SongService : BaseService<Song,long,ISongRepository>, ISongService
     {
-        private SongRepository songRepository;
-
-        public SongService(SongRepository songRepository)
+        public SongService(ISongRepository repository) : base(repository)
         {
-            this.songRepository = songRepository;
+            
         }
-
+        /*
         public IList<Song> searchSongs(string text)
         {
-            return songRepository.query().Where(s => s.Title.Contains(text)).ToList();
+            return repository.Queryable().Where(s => s.Title.Contains(text)).ToList();
         }
 
         public void update(Song song)
         {
             this.songRepository.update(song);
         }
+        */
         
 
     }

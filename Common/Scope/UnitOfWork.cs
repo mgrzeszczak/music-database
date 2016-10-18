@@ -8,13 +8,7 @@ using System.Threading.Tasks;
 
 namespace Common.Scope
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        ISession Session { get; }
-        void Commit();
-        void Rollback();
-    }
-
+    
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ISessionFactory sessionFactory;
@@ -39,7 +33,7 @@ namespace Common.Scope
         {
             if (!transaction.IsActive)
             {
-                throw new InvalidOperationException("No active transation");
+                throw new SystemException("Transaction is not active.");
             }
             transaction.Commit();
         }

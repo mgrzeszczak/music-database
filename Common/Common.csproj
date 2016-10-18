@@ -61,10 +61,11 @@
     <Compile Include="Model\Constraints\AlbumConstraints.cs" />
     <Compile Include="Model\Constraints\ArtistConstraints.cs" />
     <Compile Include="Model\Constraints\SongConstraints.cs" />
+    <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Genre.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Scope\Context.cs" />
-    <Compile Include="NHibernate\Repository.cs" />
-    <Compile Include="NHibernate\StoreConfiguration.cs" />
+    <Compile Include="Scope\IUnitOfWork.cs" />
     <Compile Include="Scope\UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

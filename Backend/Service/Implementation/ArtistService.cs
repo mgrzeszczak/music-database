@@ -5,9 +5,15 @@ using System.Linq;
 
 namespace Backend.Service
 {
-    public class ArtistService
+    public class ArtistService : BaseService<Artist,long,IArtistRepository>, IArtistService
     {
-        private ArtistRepository artistRepository;
+
+        public ArtistService(IArtistRepository repository) : base(repository)
+        {
+                    
+        }
+
+        /*private ArtistRepository artistRepository;
 
         public ArtistService(ArtistRepository artistRepository)
         {
@@ -27,6 +33,6 @@ namespace Backend.Service
         public Artist save(Artist artist)
         {
             return this.artistRepository.save(artist);
-        }
+        }*/
     }
 }

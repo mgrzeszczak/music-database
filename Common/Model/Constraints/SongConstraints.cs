@@ -14,7 +14,6 @@ namespace Common.Model.Constraints
         {
             mapping.Map(s => s.Title).UniqueKey("ALBUM_SONG");
             mapping.References(s => s.Album).UniqueKey("ALBUM_SONG");
-            //mapping.Map(s => s.Album).UniqueKey("ALBUM_SONG");
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using FluentNHibernate.Automapping.Alterations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentNHibernate.Automapping;
+using Common.Model.Enum;
 
 namespace Common.Model.Constraints
 {
@@ -12,6 +8,7 @@ namespace Common.Model.Constraints
     {
         public void Override(AutoMapping<Artist> mapping)
         {
+            mapping.Map(a => a.Genre).CustomType<Genre>();
             mapping.Map(a => a.Name).Unique();
         }
     }

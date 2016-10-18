@@ -1,10 +1,5 @@
 ﻿using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Common.Scope
 {
@@ -12,12 +7,12 @@ namespace Common.Scope
     {
         private static ThreadLocal<IUnitOfWork> currentUnitOfWork = new ThreadLocal<IUnitOfWork>();
 
-        public static void setUnitOfWork(IUnitOfWork unitOfWork)
+        public static void SetUnitOfWork(IUnitOfWork unitOfWork)
         {
             currentUnitOfWork.Value = unitOfWork;
         }
         
-        public static ISession provideSession()
+        public static ISession ProvideSession()
         {
             return currentUnitOfWork.Value.Session;
         }
