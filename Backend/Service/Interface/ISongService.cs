@@ -10,6 +10,6 @@ namespace Backend.Service
 {
     public interface ISongService : IBaseService<Song, long, ISongRepository>
     {
-
+        Song Add(Song song, long albumId);
     }
 }

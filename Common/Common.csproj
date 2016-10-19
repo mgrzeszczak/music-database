@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\DataProviderDefaults.cs" />
     <Compile Include="Communication\IDataProvider.cs" />
     <Compile Include="Exception\BusinessException.cs" />
     <Compile Include="Exception\SystemException.cs" />

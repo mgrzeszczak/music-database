@@ -10,6 +10,6 @@ namespace Backend.Service
 {
     public interface IAlbumService : IBaseService<Album,long,IAlbumRepository>
     {
-
+        Album Add(Album album, long artistId);
     }
 }

@@ -9,9 +9,9 @@ namespace Common.Communication
         IList<Artist> SearchArtistsByName(string searchText, int pageNr = DataProviderDefaults.DefaultPageNr, int amountPerPage = DataProviderDefaults.DefaultAmountPerPage);
         IList<Album> SearchAlbumsByName(string searchText, int pageNr = DataProviderDefaults.DefaultPageNr, int amountPerPage=DataProviderDefaults.DefaultAmountPerPage);
 
-        Song SaveSong(Song song);
         Artist SaveArtist(Artist artist);
-        Album SaveAlbum(Album album);
+        Album SaveAlbum(Album album, long artistId);
+        Song SaveSong(Song song, long albumId);
 
         void UpdateSong(Song song);
         void UpdateAlbum(Album album);

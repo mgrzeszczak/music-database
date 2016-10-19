@@ -95,9 +95,9 @@ namespace Backend.Communication
             return this.WrapInUnitOfWork(() => this.albumService.SearchBy(searchText, pageNr, amountPerPage));
         }
 
-        public Song SaveSong(Song song)
+        public Song SaveSong(Song song, long albumId)
         {
-            return this.WrapInUnitOfWork(() => songService.Save(song));
+            return this.WrapInUnitOfWork(() => songService.Add(song,albumId));
         }
 
         public Artist SaveArtist(Artist artist)
@@ -105,9 +105,9 @@ namespace Backend.Communication
             return this.WrapInUnitOfWork(() => artistService.Save(artist));
         }
 
-        public Album SaveAlbum(Album album)
+        public Album SaveAlbum(Album album, long artistId)
         {
-            return this.WrapInUnitOfWork(() => albumService.Save(album));
+            return this.WrapInUnitOfWork(() => albumService.Add(album,artistId));
         }
 
         public void UpdateSong(Song song)
