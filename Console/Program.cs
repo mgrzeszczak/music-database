@@ -1,10 +1,8 @@
 ﻿using Backend.Communication;
 using Common.Communication;
 using Common.Model;
-using System;
-using System.Collections.Generic;
 
-namespace BackendTester
+namespace Console
 {
     class Program
     {
@@ -12,11 +10,17 @@ namespace BackendTester
         {
             IDataProvider backendDataProvider = new BackendDataProvider();
 
-            /*Artist artist = new Artist();
+            /*
+            Artist artist = new Artist();
             artist.Name = "Kings of Leon";
             artist.Genre = Common.Model.Enum.Genre.ROCK;
-            artist.ImageUrl = "someurl";
+            artist.ImageUrl = "someurl"; */
+
             
+            Artist artist = backendDataProvider.SearchArtistsByName("kings")[0];
+            artist.Name = "Hello world";
+            backendDataProvider.UpdateArtist(artist);
+            /*
             Album album = new Album();
             album.Name = "Youth and Young Manhood";
             album.Number = 1;
