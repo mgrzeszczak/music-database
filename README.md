@@ -1,2 +1,2 @@
-# lyrics-database
+# music-database
 .NET project
