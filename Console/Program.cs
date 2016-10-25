@@ -17,8 +17,8 @@ namespace Console
             artist.ImageUrl = "someurl"; */
 
             
-            Artist artist = backendDataProvider.SearchArtistsByName("kings")[0];
-            artist.Name = "Hello world";
+            Artist artist = backendDataProvider.SearchArtistsByName("hello")[0];
+            artist.Name = "Hello wor22ld";
             backendDataProvider.UpdateArtist(artist);
             /*
             Album album = new Album();

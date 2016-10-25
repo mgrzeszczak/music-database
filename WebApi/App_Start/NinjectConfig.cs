@@ -1,4 +1,6 @@
-﻿using Ninject.Modules;
+﻿using Backend.Repository;
+using Backend.Service;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +83,13 @@ namespace Ninject.Http
         {
             public override void Load()
             {
+                this.Bind<ISongRepository>().To<SongRepository>();
+                this.Bind<IArtistRepository>().To<ArtistRepository>();
+                this.Bind<IAlbumRepository>().To<AlbumRepository>();
 
+                this.Bind<IAlbumService>().To<AlbumService>();
+                this.Bind<IArtistService>().To<ArtistService>();
+                this.Bind<ISongService>().To<SongService>();
                 //TODO: Bind to Concrete Types Here
             }
         }
