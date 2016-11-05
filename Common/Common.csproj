@@ -56,6 +56,7 @@
     <Compile Include="Communication\DataProviderDefaults.cs" />
     <Compile Include="Communication\IDataProvider.cs" />
     <Compile Include="Exception\BusinessException.cs" />
+    <Compile Include="Exception\NetworkException.cs" />
     <Compile Include="Exception\SystemException.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
