@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="Desktop.Pages.EditArtistPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop.Pages"
+             xmlns:vr="clr-namespace:Desktop.Validation"
+             xmlns:controls="clr-namespace:Desktop.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1000">
+
+    <UserControl.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
+    </UserControl.Background>
+    <DockPanel>
+        <!--HEADER-->
+        <Grid x:Name="HeaderGrid" DockPanel.Dock="Top" Height="Auto" Background="{StaticResource WindowBackgroundColorBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Viewbox Height="40" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <StackPanel  Orientation="Horizontal" >
+                    <Button Command="{Binding Submit, Mode=OneTime}" Margin="5" Height="40" Background="{StaticResource WindowBackgroundColorBrush}">
+                        <controls:MonochromaticVectorImage Style="{StaticResource UploadImage}"/>
+                    </Button>
+                    <Button Command="{Binding ApplicationViewModel.PreviousPage, Mode=OneTime}" Margin="5" Height="40" Background="{StaticResource WindowBackgroundColorBrush}">
+                        <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
+                    </Button>
+                    <!--<Button Command="{Binding Delete}" Margin="5" Height="40">
+                        <Image Source="../../../Resources/garbage.png"/>
+                    </Button>-->
+                </StackPanel>
+            </Viewbox>
+        </Grid>
+
+
+        <!--CONTENT-->
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <DockPanel x:Name="ContentPanel" Grid.Column="1" Background="{StaticResource WindowBackgroundColorBrush}">
+
+                <TextBlock DockPanel.Dock="Top" Text="{Binding Converter={StaticResource ViewModelToEditTitleConverter}}" Style="{StaticResource LargeText}" HorizontalAlignment="Center"></TextBlock>
+                <DockPanel DockPanel.Dock="Top" x:Name="ArtistHeader" Margin="20,0,20,0">
+
+                    <Border DockPanel.Dock="Left" BorderThickness="2" BorderBrush="{StaticResource DeepPurpleColorBrush}" Height="{Binding ActualHeight, ElementName=ArtistHeader}">
+                        <Image  
+                               Height="{Binding ActualHeight, ElementName=ArtistHeader}"
+                               Source="{Binding Path=ImageUrl}"
+                               Stretch="Uniform"/>
+                    </Border>
+                    <StackPanel Orientation="Vertical">
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Left" Name="TitleLabel" Text="Name: " Style="{StaticResource MediumText}"
+                                       Margin="5,0,0,0" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+
+                            </TextBlock>
+                            <TextBox MaxLength="255" DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" VerticalAlignment="Bottom" Name="TitleTextBox"
+                                         Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}">
+                                <TextBox.Text>
+                                    <Binding Path="Name" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <vr:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                        </DockPanel>
+                        <Separator/>
+                        <DockPanel>
+                            <TextBlock Text="Genre: " Style="{StaticResource MediumText}"></TextBlock>
+                            <ComboBox MaxDropDownHeight="200" Name="GenreComboBox" SelectedValue="{Binding Mode=TwoWay,Path=Genre}" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentPresenter
+                                            Content="{Binding Converter={StaticResource GenreDisplayTextConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DockPanel>
+                        <!--
+                            <StackPanel Orientation="Horizontal">
+                            <TextBox Width="70" Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}">
+                                <TextBox.Text>
+                                    <Binding Mode="TwoWay" Converter="{StaticResource GenreToString}" Path="Genre">
+                                        <Binding.ValidationRules>
+                                            <validationRules:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>-->
+                    </StackPanel>
+                </DockPanel>
+
+                <ScrollViewer DockPanel.Dock="Top">
+                    <DockPanel>
+                        <Separator DockPanel.Dock="Top" Visibility="Hidden" Height="30"/>
+                        <DockPanel DockPanel.Dock="Top" Margin="0 20 0 0" ClipToBounds="True">
+                            <TextBlock x:Name="Description" DockPanel.Dock="Top" Text="Description" HorizontalAlignment="Center" Style="{StaticResource LargeText}"/>
+                            <Border DockPanel.Dock="Top"
+                                    VerticalAlignment="Top"
+                                    BorderThickness="0,1,0,0" BorderBrush="{StaticResource DeepPurpleColorBrush}"
+                                    Padding="20,15,20,0">
+                                <TextBox 
+                                    MaxLength="2000"
+                                    TextWrapping="Wrap" xml:space="preserve"
+                                         Text="{Binding Description, Mode=TwoWay}"
+                                         Margin="50,0,50,0"
+                                         MinWidth="200"
+                                         MinLines="3"
+                                         AcceptsReturn="True"
+                                         AcceptsTab="True"
+                                         Height="Auto"/>
+                            </Border>
+                        </DockPanel>
+
+
+
+                        <!--<Separator DockPanel.Dock="Top" Visibility="Hidden" Height="30"/>
+                        <DockPanel DockPanel.Dock="Top" Margin="0 20 0 0" ClipToBounds="True">
+                            <TextBlock x:Name="AlbumsLabel" DockPanel.Dock="Top" Text="Albums" HorizontalAlignment="Center" Style="{StaticResource MediumText}"/>
+                            <Separator DockPanel.Dock="Top" Visibility="Hidden" Height="5" />
+                            <Border DockPanel.Dock="Top"
+                                    BorderThickness="0,1,0,0" BorderBrush="{StaticResource DeepPurpleColorBrush}"
+                                    Padding="20,15,20,0"
+                                    Margin="50,0,50,0">
+
+                                <StackPanel>
+                                    <ListView ItemsSource="{Binding Albums}" MinWidth="200" Name="AlbumsListView">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Name">
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate DataType="model:Album">
+                                                            <Button Style="{StaticResource TransparentImageButton}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Image Source="{Binding CoverUrl}"/>
+                                                                    <TextBlock Style="{StaticResource UnderlinedOnMouseOver}"
+                                                                               Text="{Binding Name}"/>
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate DataType="model:Album">
+                                                            <Button Command="{Binding ElementName=AlbumsListView, Path=DataContext.RemoveAlbum}"
+                                                                        CommandParameter="{Binding}">Remove</Button>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <Button Command="{Binding AddAlbum}">Add album</Button>
+                                </StackPanel>
+                            </Border>
+                        </DockPanel>-->
+                    </DockPanel>
+                </ScrollViewer>
+                
+                
+            </DockPanel>
+        </Grid>
+    </DockPanel>
+
+</UserControl>

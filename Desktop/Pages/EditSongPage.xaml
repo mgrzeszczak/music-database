@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="Desktop.Pages.EditSongPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop.Pages"
+             xmlns:vr="clr-namespace:Desktop.Validation"
+             xmlns:controls="clr-namespace:Desktop.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1000">
+
+    <UserControl.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
+    </UserControl.Background>
+
+
+    <DockPanel>
+        <!--HEADER-->
+        <Grid x:Name="HeaderGrid" DockPanel.Dock="Top" Height="Auto" Background="{StaticResource WindowBackgroundColorBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Viewbox Height="40" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <StackPanel  Orientation="Horizontal" >
+                    <Button Command="{Binding Submit, Mode=OneTime}" 
+                            
+                            Margin="5" Height="40" Background="{StaticResource WindowBackgroundColorBrush}">
+                        <controls:MonochromaticVectorImage Style="{StaticResource UploadImage}"/>
+                    </Button>
+                    <Button Command="{Binding ApplicationViewModel.PreviousPage, Mode=OneTime}" Margin="5" Height="40" Background="{StaticResource WindowBackgroundColorBrush}">
+                        <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
+                    </Button>
+                    <!--
+                    <Button Command="{Binding Delete}" Margin="5" Height="40">
+                        <Image Source="../../../Resources/garbage.png"/>
+                    </Button>-->
+                </StackPanel>
+            </Viewbox>
+        </Grid>
+
+
+
+        <!-- CONTENT -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <DockPanel x:Name="ContentPanel" Grid.Column="1" Background="{StaticResource WindowBackgroundColorBrush}">
+
+                <DockPanel DockPanel.Dock="Top" x:Name="SongHeader" Margin="20,0,20,0">
+
+                    <TextBlock DockPanel.Dock="Top" Text="{Binding Converter={StaticResource ViewModelToEditTitleConverter}}" 
+                               Style="{StaticResource LargeText}" HorizontalAlignment="Center"></TextBlock>
+
+                    <!--<Border BorderThickness="2" BorderBrush="{StaticResource DeepPurpleColorBrush}" 
+                            Height="{Binding ActualHeight, ElementName=SongHeader}">
+                        <Image DockPanel.Dock="Left" 
+                               Height="{Binding ActualHeight, ElementName=SongHeader}"
+                               Source="{Binding ElementName=Album, Path=CoverUrl}"
+                               Stretch="Uniform"/>
+                    </Border>-->
+                    <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                        <DockPanel>
+                            <!--<Grid DockPanel.Dock="Left">-->
+
+                            <TextBlock DockPanel.Dock="Left" Name="TitleLabel" Text="Title: " Style="{StaticResource MediumText}"
+                                       Margin="5,0,0,0" IsHitTestVisible="False" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+
+                            </TextBlock>
+                            <TextBox MaxLength="255" DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" VerticalAlignment="Center" Name="TitleTextBox"
+                                         Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}" >
+                                <TextBox.Text>
+                                    <Binding Path="Title" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <vr:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </DockPanel>
+                        <Separator/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource MediumText}" VerticalAlignment="Center" Text="From "/>
+                            <TextBlock Style="{StaticResource MediumText}" VerticalAlignment="Center" Text="{Binding Album.Name}"/>
+
+                            <TextBlock Style="{StaticResource MediumText}" VerticalAlignment="Center" Text=" By "/>
+                            <Button Style="{StaticResource TransparentImageButton}" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Album.Artist.Name}" Style="{StaticResource MediumText}"/>
+                            </Button>
+                        </StackPanel>
+
+
+
+                    </StackPanel>
+                </DockPanel>
+
+
+                <DockPanel DockPanel.Dock="Top">
+                    
+
+                <ScrollViewer DockPanel.Dock="Top">
+                    
+                    <DockPanel>
+                            <Grid Width="300" HorizontalAlignment="Center" Height="Auto" DockPanel.Dock="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource MediumText}" Text="Length: "></TextBlock>
+                                <xctk:TimeSpanUpDown Grid.Column="1" Grid.Row="2" Value="{Binding Path=Length,Mode=TwoWay}"></xctk:TimeSpanUpDown>
+
+
+                                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource MediumText}" Text="Number: "></TextBlock>
+                                <ComboBox MaxDropDownHeight="200"  Grid.Column="1" Grid.Row="4" Name="NumberComboBox" SelectedValue="{Binding Path=Number,Mode=TwoWay}"></ComboBox>
+
+                                <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource MediumText}" Text="Youtube link: "></TextBlock>
+                                <TextBox Grid.Column="1" Grid.Row="6" >
+                                    <TextBox.Text>
+                                        <Binding Path="YoutubeUrl" Mode="TwoWay">
+                                            <Binding.ValidationRules>
+                                                <vr:YoutubeLinkValidationRule></vr:YoutubeLinkValidationRule>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+
+                            </Grid>
+                            <Separator DockPanel.Dock="Top" Visibility="Hidden" Height="30"/>
+                        <DockPanel DockPanel.Dock="Top" Margin="0 20 0 0" ClipToBounds="True">
+                            <TextBlock x:Name="LyricsLabel" DockPanel.Dock="Top" Text="Lyrics" HorizontalAlignment="Center" Style="{StaticResource MediumText}"/>
+                            <Separator DockPanel.Dock="Top" Visibility="Hidden" Height="5" />
+                            <Border DockPanel.Dock="Top"
+                                    VerticalAlignment="Top"
+                                    BorderThickness="0,1,0,0" BorderBrush="{StaticResource DeepPurpleColorBrush}"
+                                    Padding="20,15,20,0">
+                                    <TextBox  MaxLength="4000"
+                                    TextWrapping="Wrap" xml:space="preserve"
+                                         Text="{Binding Lyrics, Mode=TwoWay}"
+                                         Margin="50,0,50,0"
+                                         MinWidth="200"
+                                         MinLines="3"
+                                         AcceptsReturn="True"
+                                         AcceptsTab="True"
+                                         Height="Auto"/>
+                            </Border>
+                        </DockPanel>
+                    </DockPanel>
+                </ScrollViewer>
+
+
+            </DockPanel>
+
+
+                
+
+            </DockPanel>
+
+        </Grid>
+    </DockPanel>
+
+</UserControl>

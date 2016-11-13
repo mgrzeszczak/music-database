@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Common.Model.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +8,17 @@ using System.Threading.Tasks;
 
 namespace Common.Model
 {
-    public class Artist
+    public class Artist : Entity<long>
     {
-        public virtual long Id { get; set; }
         public virtual string Name { get; set; }
+        public virtual string ImageUrl { get; set; }
+        public virtual Genre Genre { get; set; }
+        public virtual string Description { get; set; }
+
+        public Artist()
+        {
+
+        }
+        
     }
 }

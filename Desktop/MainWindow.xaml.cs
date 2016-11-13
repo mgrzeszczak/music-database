@@ -1,9 +1,4 @@
-﻿using Common;
-using Common.Model;
-using FluentNHibernate.Automapping;
-using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
-using MySql.Data.MySqlClient;
+﻿using Desktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +23,8 @@ namespace Desktop
     {
         public MainWindow()
         {
+            DataContext = new ApplicationViewModel();
             InitializeComponent();
-            
-          
-            
         }
     }
 }

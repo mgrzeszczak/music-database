@@ -4,9 +4,55 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
+        xmlns:vm="clr-namespace:Desktop.ViewModel"
+        xmlns:page="clr-namespace:Desktop.Pages"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="MusicDB" Height="600" Width="800"
+        MinHeight="600" MinWidth="800" Icon="Resources/icon.png">
+
+    <Window.Resources>
+
+        <DataTemplate DataType="{x:Type vm:DisplayArtistViewModel}">
+            <page:DisplayArtistPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DisplayAlbumViewModel}">
+            <page:DisplayAlbumPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DisplaySongViewModel}">
+            <page:DisplaySongPage/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:EditArtistViewModel}">
+            <page:EditArtistPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EditAlbumViewModel}">
+            <page:EditAlbumPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EditSongViewModel}">
+            <page:EditSongPage/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:CreateArtistViewModel}">
+            <page:EditArtistPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateAlbumViewModel}">
+            <page:EditAlbumPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CreateSongViewModel}">
+            <page:EditSongPage/>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+            <page:HomePage/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SearchViewModel}">
+            <page:SearchPage/>
+        </DataTemplate>
         
-    </Grid>
+    </Window.Resources>
+
+    <ContentControl x:Name="windowContent" Content="{Binding CurrentViewModel}"/>
+
 </Window>

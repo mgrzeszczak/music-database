@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Model
 {
-    public class Album
+    public class Album : Entity<long>
     {
-        public virtual long Id { get; set; }
         public virtual string Name { get; set; }
+        public virtual int Number { get; set; }
+        public virtual string CoverUrl { get; set; }
+        public virtual Artist Artist { get; set; }
+        public virtual TimeSpan Length { get; set; }
+        public virtual int Year { get; set; }
+
+        public Album()
+        {
+
+        }
+        
     }
 }

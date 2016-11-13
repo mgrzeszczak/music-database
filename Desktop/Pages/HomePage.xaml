@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Desktop.Pages.HomePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop.Pages"
+             xmlns:controls="clr-namespace:Desktop.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="1000" d:DesignWidth="1000">
+
+    <UserControl.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
+    </UserControl.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
+            <!--<TextBlock x:Name="WelcomeText" Style="{StaticResource TitleText}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="MusicDB" VerticalAlignment="Center"/>
+            <Image Source="../Resources/musical-note.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" RenderOptions.BitmapScalingMode="Fant"/>-->
+            <TextBlock x:Name="WelcomeText" Foreground="Black" Style="{StaticResource TitleText}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="MusicDB" VerticalAlignment="Center"/>
+            <controls:MonochromaticVectorImage Margin="10,0,0,0" Style="{StaticResource LogoImage}" ImageBrush="Black"/>
+        </StackPanel>
+
+        <controls:SearchBar Grid.Row="2" Grid.Column="1" Height="40" DelayedSearchCommand="{Binding ApplicationViewModel.Search}" SearchText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <!--
+        <minor:SearchBar Grid.Row="2" Grid.Column="1" Height="40"
+                         DelayedSearchCommand="{Binding DelayedSearch}" SearchText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        -->
+
+        <controls:MonochromaticVectorImage 
+            Height="30"
+            Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+            Style="{StaticResource CopyrightImage}" ImageBrush="Black">
+            <controls:MonochromaticVectorImage.ToolTip>
+                <TextBlock Foreground="{StaticResource DarkFontColorBrush}"
+                           Text="Icons designed by Freepik and distributed by Flaticon"/>
+            </controls:MonochromaticVectorImage.ToolTip>
+        </controls:MonochromaticVectorImage>
+
+        <!--
+        <TextBlock Text="Credits" Style="{StaticResource MediumText}"
+                   Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                   FontWeight="Bold" FontSize="20" ToolTipService.InitialShowDelay="100">
+            <TextBlock.ToolTip>
+                <TextBlock Foreground="{StaticResource DarkFontColorBrush}"
+                           Text="Icons designed by Freepik and distributed by Flaticon"/>
+            </TextBlock.ToolTip>
+        </TextBlock>-->
+    </Grid>
+
+</UserControl>
