@@ -13,6 +13,8 @@ namespace Common.Domain
         ALBUM_NAME_TAKEN,
         SONG_TITLE_TAKEN,
         SONG_NUMBER_TAKEN,
-        ALBUM_NUMBER_TAKEN
+        ALBUM_NUMBER_TAKEN,
+
+        INVALID_CREDENTIALS
     }
 }
