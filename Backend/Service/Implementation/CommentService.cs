@@ -7,6 +7,7 @@ using Backend.Repository.Interface;
 using Backend.Service.Interface;
 using Common.Domain;
 using Common.Model;
+using Common.Model.Enum;
 
 namespace Backend.Service.Implementation
 {
@@ -25,6 +26,16 @@ namespace Backend.Service.Implementation
         public override Page<Comment> SearchBy<TKey>(string searchText, Func<Comment, TKey> keyMapper, IComparer<TKey> comparator, int pageNr, int amountPerPage)
         {
             return repository.SearchBy(searchText, c=>c.Content+c.User.Login, keyMapper, comparator, pageNr, amountPerPage);
+        }
+
+        public Page<Comment> PageByEntityIdAndType(long id, EntityType type, int pageNr, int amountPerPage)
+        {
+            return repository.PageByEntityIdAndType(id, type, pageNr, amountPerPage);
+        }
+
+        public Page<Comment> PageByEntityIdAndTypeAndUserId(long id, EntityType type, long userId, int pageNr, int amountPerPage)
+        {
+            return repository.PageByEntityIdAndTypeAndUserId(id, type, userId, pageNr, amountPerPage);
         }
     }
 }

@@ -23,25 +23,21 @@ namespace WebApi.Controllers
     public class SongController : ApiController
     {
         private ISongService songService;
-        private IRatingService ratingService;
-        private ICommentService commentService;
 
-        public SongController(ISongService songService, IRatingService ratingService, ICommentService commentService)
+        public SongController(ISongService songService)
         {
             this.songService = songService;
-            this.ratingService = ratingService;
-            this.commentService = commentService;
         }
 
         [HttpDelete]
-        [Route("delete/{songId}")]
-        public void Delete(long songId)
+        [Route("delete/{id}")]
+        public void Delete(long id)
         {
-            songService.Delete(songId);
+            songService.Delete(id);
         }
            
         [HttpGet]
-        [Route("find/{albumId}")]
+        [Route("fromAlbum/{albumId}")]
         public IList<Song> FindByAlbumId(long albumId)
         {
             return songService.FindByAlbumId(albumId);

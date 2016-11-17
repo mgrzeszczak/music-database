@@ -17,13 +17,19 @@ namespace Desktop.ViewModel
 
         public DisplaySongViewModel(ApplicationViewModel applicationViewModel, IResponseDataProvider dataProvider, long songId) : base(applicationViewModel,dataProvider)
         {
-            Response<Song> response = DataProvider.GetSongById(songId);
+            /*Response<Song> response = DataProvider.GetSongById(songId);
             if (!response.Status)
             {
                 ApplicationViewModel.HandleError(response.Error);
                 return;
             }
-            Model = response.Content;
+            Model = response.Content;*/
+            ApplicationViewModel.RestClient.ExecuteAsync<Song>(
+                ApplicationViewModel.RequestFactory.GetSongRequest(songId),
+                (resp,handle) =>
+                {
+                    if (resp.Data!=null) Model = resp.Data;
+                });
         }
 
         private bool isClosing;

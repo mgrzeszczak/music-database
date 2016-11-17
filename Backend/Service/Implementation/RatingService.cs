@@ -7,6 +7,7 @@ using Backend.Repository.Interface;
 using Backend.Service.Interface;
 using Common.Domain;
 using Common.Model;
+using Common.Model.Enum;
 
 namespace Backend.Service.Implementation
 {
@@ -24,6 +25,16 @@ namespace Backend.Service.Implementation
         public override Page<Rating> SearchBy<TKey>(string searchText, Func<Rating, TKey> keyMapper, IComparer<TKey> comparator, int pageNr, int amountPerPage)
         {
             return repository.SearchBy(searchText, r => r.Value.ToString(), keyMapper, comparator, pageNr, amountPerPage);
+        }
+
+        public double GetAverageRating(EntityType type, long id)
+        {
+            return repository.GetAverageRating(type, id);
+        }
+
+        public Rating GetUserRatingForEntity(EntityType type, long entityId, long userId)
+        {
+            return repository.GetUserRatingForEntity(type, entityId, userId);
         }
     }
 }

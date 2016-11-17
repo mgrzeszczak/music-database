@@ -72,6 +72,8 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Constraints\AlbumConstraints.cs" />
     <Compile Include="Model\Constraints\ArtistConstraints.cs" />
+    <Compile Include="Model\Constraints\CommentConstraints.cs" />
+    <Compile Include="Model\Constraints\RatingConstraints.cs" />
     <Compile Include="Model\Constraints\SongConstraints.cs" />
     <Compile Include="Model\Constraints\UserConstraints.cs" />
     <Compile Include="Model\Entity.cs" />

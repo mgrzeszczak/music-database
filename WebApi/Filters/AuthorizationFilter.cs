@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Common.Authorization;
+using WebApi.App_Start;
 using WebApi.Attributes;
 using WebApi.Authorization;
+using WebApi.Utils;
 
-namespace WebApi.App_Start
+namespace WebApi.Filters
 {
     public class AuthorizationFilter : ActionFilterAttribute
     {
@@ -41,11 +43,12 @@ namespace WebApi.App_Start
         private bool Authorize(Role role, string login, string token)
         {
             IUserCache userCache = NinjectHttpContainer.Resolve<IUserCache>();
-            var cachedToken = userCache.GetTokenByLogin(login);
-            var user = userCache.GetUserByToken(token);
-            if (user == null || cachedToken == null || token!=cachedToken || user.GetLogin()!=login) return false;
-            var ret = user.GetRole() >= role;
-            if (ret) AuthenticationUtils.CurrentAuthentication = user;
+            var auth = userCache.GetAuthByLogin(login);
+            //var cachedToken = userCache.GetTokenByLogin(login);
+            //var user = userCache.GetUserByToken(token);
+            if (auth == null || auth.GetUser() == null || auth.GetToken() == null || auth.GetToken()!=token || auth.GetLogin()!=login) return false;
+            var ret = auth.GetRole() >= role;
+            if (ret) AuthenticationUtils.CurrentAuthentication = auth;
             return ret;
         }
 

@@ -9,7 +9,7 @@ using Backend.Scope;
 using NHibernate;
 using WebApi.Attributes;
 
-namespace WebApi.App_Start
+namespace WebApi.Filters
 {
     public class TransactionFilter : ActionFilterAttribute
     {

@@ -110,27 +110,27 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AuthorizationFilter.cs" />
+    <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="App_Start\CentralizedPrefixProvider.cs" />
-    <Compile Include="App_Start\ExceptionFilter.cs" />
-    <Compile Include="App_Start\HttpNotFoundAwareControllerActionSelector.cs" />
-    <Compile Include="App_Start\HttpNotFoundAwareDefaultHttpControllerSelector.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="App_Start\NinjectConfig.cs" />
-    <Compile Include="App_Start\TransactionFilter.cs" />
+    <Compile Include="Filters\TransactionFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\Authorize.cs" />
     <Compile Include="Attributes\Transactional.cs" />
     <Compile Include="Authorization\Authentication.cs" />
-    <Compile Include="Authorization\AuthenticationUtils.cs" />
+    <Compile Include="Utils\AuthenticationUtils.cs" />
     <Compile Include="Authorization\AuthorizationService.cs" />
     <Compile Include="Authorization\IAuthentication.cs" />
     <Compile Include="Authorization\IAuthorizationService.cs" />
     <Compile Include="Authorization\IUserCache.cs" />
-    <Compile Include="Authorization\StringUtils.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Authorization\UserCache.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\ArtistController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

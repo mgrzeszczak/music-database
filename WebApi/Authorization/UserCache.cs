@@ -3,50 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Common.Authorization;
+using Common.Domain;
+using Common.Exception;
 using Common.Model;
 
 namespace WebApi.Authorization
 {
     public class UserCache : IUserCache
     {
-        private readonly Dictionary<string,string> loginTokenDictionary = new Dictionary<string, string>();
-        private readonly Dictionary<string, IAuthentication> tokenUserDictionary = new Dictionary<string, IAuthentication>();
-        private readonly Dictionary<IAuthentication, DateTime> userToLastActionDictionary = new Dictionary<IAuthentication, DateTime>();
+        private readonly Dictionary<string, IAuthentication> loginAuthDict = new Dictionary<string, IAuthentication>();
+        private readonly Dictionary<string, DateTime> loginLastTimeDict = new Dictionary<string, DateTime>();
+
+        private TimeSpan TOKEN_EXPIRATION_TIME = TimeSpan.FromMinutes(5);
 
         public UserCache()
         {
-            /*User testUser = new User();
+            User testUser = new User();
             testUser.Role= Role.ADMIN;
             testUser.Login = "login";
             Authentication authentication = new Authentication(testUser,"token");
-            loginTokenDictionary.Add("login","token");
-            tokenUserDictionary.Add("token",authentication);*/
+            loginAuthDict.Add(testUser.Login,authentication);
+            loginLastTimeDict.Add(testUser.Login,new DateTime(2017,1,1,1,1,1));
         }
 
-        public void PutLoginWithToken(string login, string token)
+        public void PutAuthWithLogin(string login, IAuthentication auth)
         {
-            loginTokenDictionary.Add(login,token);
+            if (loginAuthDict.ContainsKey(login)) loginAuthDict.Remove(login);
+            if (loginLastTimeDict.ContainsKey(login)) loginLastTimeDict.Remove(login);
+            loginAuthDict.Add(login,auth);
+            loginLastTimeDict.Add(login,new DateTime());
         }
 
-        public void PutUserWithToken(string token, IAuthentication authentication)
+        public IAuthentication GetAuthByLogin(string login)
         {
-            tokenUserDictionary.Add(token,authentication);
+            if (loginLastTimeDict.ContainsKey(login))
+            {
+                var lastTime = loginLastTimeDict[login];
+                if (new DateTime() - lastTime > TOKEN_EXPIRATION_TIME)
+                {
+                    loginAuthDict.Remove(login);
+                    loginLastTimeDict.Remove(login);
+                    return null;
+                }
+                loginLastTimeDict.Remove(login);
+                loginLastTimeDict.Add(login, new DateTime());
+            }
+            return loginAuthDict.ContainsKey(login) ? loginAuthDict[login] : null;
         }
 
-        public string GetTokenByLogin(string login)
+        public void RemoveAuth(string login)
         {
-            return loginTokenDictionary.ContainsKey(login)? loginTokenDictionary[login] : null;
+            loginAuthDict.Remove(login);
+            loginLastTimeDict.Remove(login);
         }
 
-        public IAuthentication GetUserByToken(string token)
-        {
-            return tokenUserDictionary.ContainsKey(token) ? tokenUserDictionary[token] : null;
-        }
-
-        public void RemoveUser(IAuthentication authentication)
-        {
-            tokenUserDictionary.Remove(authentication.GetToken());
-            loginTokenDictionary.Remove(authentication.GetLogin());
-        }
     }
 }

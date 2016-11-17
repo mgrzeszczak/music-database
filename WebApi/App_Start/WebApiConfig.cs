@@ -13,17 +13,24 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 using WebApi.App_Start;
+using WebApi.Filters;
 
 namespace WebApi
 {
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
-        { 
+        {
             var storeCfg = new ModelConfig();
             var fluentConfig = Fluently.Configure()
                 .Database(MySQLConfiguration.Standard.ConnectionString(c => c.Is(DatabaseConfig.ConnectionString)))
-                .Mappings(m => m.AutoMappings.Add(AutoMap.AssemblyOf<Song>(storeCfg).UseOverridesFromAssemblyOf<SongConstraints>()))
+                .Mappings(m => {
+                    var map = AutoMap.AssemblyOf<Song>(storeCfg);
+                    map.UseOverridesFromAssemblyOf<SongConstraints>();
+                    map.Conventions.Add(FluentNHibernate.Conventions.Helpers.DefaultLazy.Never());
+                    m.AutoMappings.Add(map);
+                }
+                )
                 .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
             var conf = fluentConfig.BuildConfiguration();
             var sessionFactory = conf.BuildSessionFactory();
@@ -42,7 +49,8 @@ namespace WebApi
 
             config.Routes.MapHttpRoute(
                 name: "Default",
-                routeTemplate: "{*url}",
+                //routeTemplate: "{*url}",
+                routeTemplate: "{*.*}",
                 defaults: new { controller = "Error", action = "NotFound" }
             );
             /*

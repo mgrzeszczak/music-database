@@ -8,6 +8,7 @@ using Common.Domain;
 using Common.Exception;
 using Common.Model;
 using Ninject;
+using WebApi.Utils;
 
 namespace WebApi.Authorization
 {
@@ -28,8 +29,9 @@ namespace WebApi.Authorization
             if (user==null || StringUtils.CalculateHashedPassword(password,user.PasswordSalt)!=user.Password) throw new BusinessException(Error.INVALID_CREDENTIALS);
             var token = StringUtils.GenerateToken();
             var auth =  new Authentication(user, token);
-            userCache.PutLoginWithToken(login, token);
-            userCache.PutUserWithToken(token,auth);
+            userCache.PutAuthWithLogin(login,auth);
+            //userCache.PutLoginWithToken(login, token);
+            //userCache.PutUserWithToken(token,auth);
             return auth;
         }
 
@@ -44,7 +46,8 @@ namespace WebApi.Authorization
         public void Logout()
         {
             var auth = AuthenticationUtils.CurrentAuthentication;
-            userCache.RemoveUser(auth);
+            //userCache.RemoveUser(auth);
+            userCache.RemoveAuth(auth.GetLogin());
             AuthenticationUtils.CurrentAuthentication = null;
         }
     }

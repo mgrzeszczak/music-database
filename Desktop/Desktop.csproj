@@ -120,6 +120,8 @@
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\ViewModelToEditTitleConverter.cs" />
     <Compile Include="Data\AsyncResponseDataProvider.cs" />
+    <Compile Include="Data\IRestRequestFactory.cs" />
+    <Compile Include="Data\RestRequestFactory.cs" />
     <Compile Include="Pages\DisplayAlbumPage.xaml.cs">
       <DependentUpon>DisplayAlbumPage.xaml</DependentUpon>
     </Compile>

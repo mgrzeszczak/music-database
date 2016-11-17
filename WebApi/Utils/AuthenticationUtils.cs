@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using WebApi.Authorization;
 
-namespace WebApi.Authorization
+namespace WebApi.Utils
 {
     public class AuthenticationUtils
     {

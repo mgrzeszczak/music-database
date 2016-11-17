@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace WebApi.Authorization
+namespace WebApi.Utils
 {
     public class StringUtils
     {

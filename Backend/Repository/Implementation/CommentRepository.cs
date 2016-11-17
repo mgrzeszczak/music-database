@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Backend.Repository.Interface;
+using Common.Domain;
 using Common.Model;
 using Common.Model.Enum;
 
@@ -11,14 +12,22 @@ namespace Backend.Repository.Implementation
 {
     public class CommentRepository : BaseRepository<Comment, long>, ICommentRepository
     {
-        public IList<Comment> FindAllByEntityIdAndType(long id, EntityType type)
+        public Page<Comment> PageByEntityIdAndType(long id, EntityType type, int pageNr, int amountPerPage)
         {
-            return Queryable().Where(c => c.EntityId == id && c.EntityType == type).ToList();
+            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type);
+            int count = result.Count();
+            int pageCount = count / amountPerPage;
+            if (count % amountPerPage != 0) pageCount += 1;
+            return Page(pageNr, amountPerPage, c => c.TimeStamp, Comparer<DateTime>.Default, result, count, pageCount);
         }
 
-        public IList<Comment> FindAllByEntityIdAndTypeAndUserId(long id, EntityType type, long userId)
+        public Page<Comment> PageByEntityIdAndTypeAndUserId(long id, EntityType type, long userId, int pageNr, int amountPerPage)
         {
-            return Queryable().Where(c => c.EntityId == id && c.EntityType == type && c.User.Id == userId).ToList();
+            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type && r.User.Id == userId);
+            int count = result.Count();
+            int pageCount = count / amountPerPage;
+            if (count % amountPerPage != 0) pageCount += 1;
+            return Page(pageNr, amountPerPage, c => c.TimeStamp, Comparer<DateTime>.Default, result, count, pageCount);
         }
     }
 }

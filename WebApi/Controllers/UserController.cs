@@ -10,23 +10,18 @@ using Common.Model;
 using Ninject;
 using WebApi.Attributes;
 using WebApi.Authorization;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
     [RoutePrefix("user")]
     public class UserController : ApiController
     {
-        private IUserService userService;
         private IAuthorizationService authorizationService;
-        private IRatingService ratingService;
-        private ICommentService commentService;
 
-        public UserController(IUserService userService, IAuthorizationService authorizationService, IRatingService ratingService, ICommentService commentService)
+        public UserController(IAuthorizationService authorizationService)
         {
-            this.userService = userService;
             this.authorizationService = authorizationService;
-            this.ratingService = ratingService;
-            this.commentService = commentService;
         }
 
         [Route("login")]

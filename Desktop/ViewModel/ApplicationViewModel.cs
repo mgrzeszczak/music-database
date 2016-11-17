@@ -7,6 +7,8 @@ using Desktop.Command;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Desktop.Data;
+using RestSharp;
 
 namespace Desktop.ViewModel
 {
@@ -14,8 +16,13 @@ namespace Desktop.ViewModel
     {
         private IResponseDataProvider dataProvider;
 
+        public IRestRequestFactory RequestFactory { get; }
+        public IRestClient RestClient { get; }
+
         public ApplicationViewModel()
         {
+            RequestFactory = new RestRequestFactory();
+            RestClient = new RestClient("http://localhost:55059/api");
             History = new BrowsingHistory(this);
             dataProvider = new BackendResponseDataProvider();
             CurrentViewModel = new HomeViewModel(this, dataProvider);

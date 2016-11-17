@@ -8,10 +8,8 @@ namespace WebApi.Authorization
 {
     public interface IUserCache
     {
-        void PutLoginWithToken(string login, string token);
-        void PutUserWithToken(string token, IAuthentication authentication);
-        string GetTokenByLogin(string login);
-        IAuthentication GetUserByToken(string token);
-        void RemoveUser(IAuthentication authentication);
+        void PutAuthWithLogin(string login, IAuthentication auth);
+        IAuthentication GetAuthByLogin(string login);
+        void RemoveAuth(string login);
     }
 }

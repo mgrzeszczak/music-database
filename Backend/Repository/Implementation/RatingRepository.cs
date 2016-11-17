@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Backend.Repository.Interface;
+using Common.Domain;
 using Common.Model;
 using Common.Model.Enum;
 
@@ -11,14 +12,17 @@ namespace Backend.Repository.Implementation
 {
     public class RatingRepository : BaseRepository<Rating,long>, IRatingRepository
     {
-        public IList<Rating> FindAllByEntityIdAndType(long id, EntityType type)
+        public double GetAverageRating(EntityType type, long id)
         {
-            return Queryable().Where(r => r.EntityId == id && r.EntityType == type).ToList();
+            var result = Queryable().Where(r => r.EntityType == type && r.EntityId == id);
+            var count = result.Count();
+            var sum = result.Aggregate(0.0, (s, r) => s + r.Value);
+            return count > 0 ? sum/count : 0;
         }
 
-        public IList<Rating> FindAllByEntityIdAndTypeAndUserId(long id, EntityType type, long userId)
+        public Rating GetUserRatingForEntity(EntityType type, long entityId, long userId)
         {
-            return Queryable().Where(r => r.EntityId == id && r.EntityType == type && r.User.Id == userId).ToList();
+            return Queryable().FirstOrDefault(r => r.EntityType == type && r.EntityId == entityId && r.User.Id == userId);
         }
     }
 }
