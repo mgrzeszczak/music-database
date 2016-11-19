@@ -9,6 +9,7 @@ using Backend.Service;
 using Backend.Service.Interface;
 using Common.Authorization;
 using Common.Domain;
+using Common.Message;
 using Common.Model;
 using Ninject;
 using WebApi.Attributes;
@@ -20,10 +21,12 @@ namespace WebApi.Controllers
     public class ArtistController : ApiController
     {
         private IArtistService artistService;
+        private IAlbumService albumService;
 
-        public ArtistController(IArtistService artistService)
+        public ArtistController(IArtistService artistService, IAlbumService albumService)
         {
             this.artistService = artistService;
+            this.albumService = albumService;
         }
 
         [HttpDelete]
@@ -38,6 +41,15 @@ namespace WebApi.Controllers
         public Page<Artist> Search(string searchText, int pageNr = 1, int amountPerPage = 10)
         {
             return artistService.SearchBy(searchText, pageNr, amountPerPage);
+        }
+
+        [Route("getWithAlbums/{id}")]
+        [HttpGet]
+        public ArtistWithAlbums GetWithAlbums(long id)
+        {
+            var artist = artistService.FindById(id);
+            var albums = albumService.FindByArtistId(id);
+            return new ArtistWithAlbums(artist,albums);
         }
 
         [Route("get/{id}")]

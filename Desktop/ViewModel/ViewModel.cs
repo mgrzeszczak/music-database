@@ -20,7 +20,7 @@ namespace Desktop.ViewModel
 
         protected void OnPropertyChanged(string propertyName)
         {
-            this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() => this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName))));
         }
 
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)

@@ -5,7 +5,7 @@ using System.Web;
 using Common.Authorization;
 using Common.Model;
 
-namespace WebApi.Authorization
+namespace Common.Authorization
 {
     public class Authentication : IAuthentication
     {

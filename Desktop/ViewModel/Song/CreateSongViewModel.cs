@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -27,13 +28,20 @@ namespace Desktop.ViewModel
         protected override void InitializeCommands()
         {
             base.InitializeCommands();
-            Submit = new RelayCommand(o => {
-                Response<Song> response = DataProvider.SaveSong(model);
+            Submit = new RelayCommand(o =>
+            {
+                ApplicationViewModel.RestClient.ExecuteAsync<Song>(ApplicationViewModel.RequestFactory.AddSongRequest(model),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded()) ApplicationViewModel.DisplayView.Execute(r.Data);
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+                /*Response<Song> response = DataProvider.SaveSong(model);
                 if (!response.Status)
                 {
                     ApplicationViewModel.HandleError(response.Error);
                 } else
-                ApplicationViewModel.DisplayView.Execute(response.Content);
+                ApplicationViewModel.DisplayView.Execute(response.Content);*/
             });
         }
 

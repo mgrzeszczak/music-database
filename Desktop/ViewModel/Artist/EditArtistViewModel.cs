@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -15,24 +16,36 @@ namespace Desktop.ViewModel
     {
         public EditArtistViewModel(ApplicationViewModel applicationViewModel, IResponseDataProvider dataProvider, long artistId) : base(applicationViewModel, dataProvider)
         {
-            Response<Artist> respArtist = DataProvider.GetArtistById(artistId);
+            ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.GetArtistRequest(artistId),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded()) model = r.Data;
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+            /*Response<Artist> respArtist = DataProvider.GetArtistById(artistId);
             if (!respArtist.Status)
             {
                 ApplicationViewModel.HandleError(respArtist.Error);
                 return;
             }
-            Model = respArtist.Content;
+            Model = respArtist.Content;*/
         }
 
         protected override void InitializeCommands()
         {
             Submit = new RelayCommand(o => {
-                Response<Artist> response = DataProvider.UpdateArtist(model);
+                ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.UpdateArtistRequest(model),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded()) ApplicationViewModel.DisplayView.Execute(r.Data);
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+                /*Response<Artist> response = DataProvider.UpdateArtist(model);
                 if (!response.Status)
                 {
                     ApplicationViewModel.HandleError(response.Error);
                 }
-                else ApplicationViewModel.DisplayView.Execute(response.Content);
+                else ApplicationViewModel.DisplayView.Execute(response.Content);*/
             });
             base.InitializeCommands();
         }

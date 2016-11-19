@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Desktop.Data;
+using RestSharp;
 
 namespace Desktop.ViewModel
 {
@@ -33,6 +35,8 @@ namespace Desktop.ViewModel
 
         public ApplicationViewModel ApplicationViewModel { get; set; }
         public IResponseDataProvider DataProvider { get; set; }
+        public IRestClient RestClient => ApplicationViewModel.RestClient;
+        public IRestRequestFactory RequestFactory => ApplicationViewModel.RequestFactory;
 
         protected override void InitializeCommands()
         {

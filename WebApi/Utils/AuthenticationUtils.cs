@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using Common.Authorization;
 using WebApi.Authorization;
 
 namespace WebApi.Utils

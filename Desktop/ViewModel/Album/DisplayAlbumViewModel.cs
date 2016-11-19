@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Common.Message;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -18,7 +20,17 @@ namespace Desktop.ViewModel
 
         public DisplayAlbumViewModel(ApplicationViewModel applicationViewModel, IResponseDataProvider dataProvider, long albumId) : base(applicationViewModel,dataProvider)
         {
-            Response<Album> respAlbum = DataProvider.GetAlbumById(albumId);
+            RestClient.ExecuteAsync<AlbumWithSongs>(RequestFactory.GetAlbumWithSongsRequest(albumId),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded())
+                        {
+                            Songs = new ObservableCollection<Song>(r.Data.Songs);
+                            Model = r.Data.Album;
+                        }
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+            /*Response<Album> respAlbum = DataProvider.GetAlbumById(albumId);
             Response<IList<Song>> respSongs = DataProvider.GetSongsFromAlbum(albumId);
             if (!respAlbum.Status || !respSongs.Status)
             {
@@ -26,7 +38,7 @@ namespace Desktop.ViewModel
                 return;
             }
             Songs = new ObservableCollection<Song>(respSongs.Content);
-            Model = respAlbum.Content;
+            Model = respAlbum.Content;*/
         }
 
         public ICommand Delete { get; set; }
@@ -56,13 +68,23 @@ namespace Desktop.ViewModel
             base.InitializeCommands();
             Delete = new RelayCommand(o =>
             {
-                Response<bool> response = DataProvider.DeleteAlbum(model.Id);
+                ApplicationViewModel.RestClient.ExecuteAsync(ApplicationViewModel.RequestFactory.DeleteAlbumRequest(model.Id),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded())
+                        {
+                            ApplicationViewModel.DisplayView.Execute(model.Artist);
+                            ApplicationViewModel.ClearHistory();
+                        }
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+                /*Response<bool> response = DataProvider.DeleteAlbum(model.Id);
                 if (!response.Status) ApplicationViewModel.HandleError(response.Error);
                 else
                 {
                     ApplicationViewModel.DisplayView.Execute(model.Artist);
                     ApplicationViewModel.ClearHistory();
-                }
+                }*/
             });
             CreateSong = new RelayCommand(o =>
             {

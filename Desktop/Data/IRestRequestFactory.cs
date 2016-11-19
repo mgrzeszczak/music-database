@@ -9,8 +9,10 @@ using RestSharp;
 
 namespace Desktop.Data
 {
-    interface IRestRequestFactory
+    public interface IRestRequestFactory
     {
+        IRestRequest CommonSearchRequest(string searchText, int pageNr, int amountPerPage);
+
         // USER CONTROLLER
         IRestRequest LoginRequest(string login, string password);
         IRestRequest LogoutRequest();
@@ -30,6 +32,7 @@ namespace Desktop.Data
         IRestRequest UpdateAlbumRequest(Album album);
         IRestRequest DeleteAlbumRequest(long id);
         IRestRequest GetAlbumRequest(long id);
+        IRestRequest GetAlbumWithSongsRequest(long id);
         IRestRequest SearchAlbumsRequest(string searchText, int pageNr = 1, int amountPerPage = 10);
         IRestRequest AlbumsByArtistRequest(long artistId);
 
@@ -38,6 +41,7 @@ namespace Desktop.Data
         IRestRequest UpdateArtistRequest(Artist artist);
         IRestRequest DeleteArtistRequest(long id);
         IRestRequest GetArtistRequest(long id);
+        IRestRequest GetArtistWithAlbumsRequest(long id);
         IRestRequest SearchArtistsRequest(string searchText, int pageNr = 1, int amountPerPage = 10);
 
         // COMMENT CONTROLLER

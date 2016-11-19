@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+ using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -28,7 +29,8 @@ namespace Desktop.ViewModel
                 ApplicationViewModel.RequestFactory.GetSongRequest(songId),
                 (resp,handle) =>
                 {
-                    if (resp.Data!=null) Model = resp.Data;
+                    if (resp.Succeeded()) Model = resp.Data;
+                    else ApplicationViewModel.HandlExceptionResponse(resp.ExceptionResponse());
                 });
         }
 
@@ -62,13 +64,25 @@ namespace Desktop.ViewModel
             Delete = new RelayCommand(o =>
             {
                 IsClosing = true;
-                Response<bool> response = DataProvider.DeleteSong(model.Id);
+
+
+                ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.DeleteSongRequest(model.Id),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded())
+                        {
+                            ApplicationViewModel.DisplayView.Execute(model.Album);
+                            ApplicationViewModel.ClearHistory();
+                        }
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+                /*Response<bool> response = DataProvider.DeleteSong(model.Id);
                 if (!response.Status) ApplicationViewModel.HandleError(response.Error);
                 else
                 {
                     ApplicationViewModel.DisplayView.Execute(model.Album);
                     ApplicationViewModel.ClearHistory();
-                }
+                }*/
             });
             Home = new RelayCommand(o =>
             {

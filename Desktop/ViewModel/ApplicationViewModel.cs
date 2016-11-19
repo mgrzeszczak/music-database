@@ -7,6 +7,7 @@ using Desktop.Command;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Common.Exception;
 using Desktop.Data;
 using RestSharp;
 
@@ -15,16 +16,22 @@ namespace Desktop.ViewModel
     class ApplicationViewModel : ViewModel
     {
         private IResponseDataProvider dataProvider;
-
         public IRestRequestFactory RequestFactory { get; }
         public IRestClient RestClient { get; }
 
         public ApplicationViewModel()
         {
             RequestFactory = new RestRequestFactory();
-            RestClient = new RestClient("http://localhost:55059/api");
+            RestClient = new RestClient("http://164.132.63.49/musicdb/api");
+            var jsonSerializer = NewtonsoftJsonSerializer.Default;
+            RestClient.AddHandler("application/json", jsonSerializer);
+            RestClient.AddHandler("text/json", jsonSerializer);
+            RestClient.AddHandler("text/x-json", jsonSerializer);
+            RestClient.AddHandler("text/javascript", jsonSerializer);
+            RestClient.AddHandler("*+json", jsonSerializer);
+
             History = new BrowsingHistory(this);
-            dataProvider = new BackendResponseDataProvider();
+            //dataProvider = new BackendResponseDataProvider();
             CurrentViewModel = new HomeViewModel(this, dataProvider);
         }
 
@@ -39,8 +46,7 @@ namespace Desktop.ViewModel
         protected override void InitializeCommands()
         {
             DisplayView = new RelayCommand((o) =>
-            {
-                Console.WriteLine("DisplayView: " + o.ToString());
+            {                 
                 if (o is Song)
                     ExecuteChangePage(new DisplaySongViewModel(this,dataProvider,(o as Song).Id));
                 else if (o is Album)
@@ -59,8 +65,6 @@ namespace Desktop.ViewModel
             });
             CreateView = new RelayCommand((o) =>
             {
-                
-                //ExecuteChangePage(o as ViewModel);
                 if (o is Album)
                     ExecuteChangePage(new CreateSongViewModel(this, dataProvider, (o as Album)));
                 else if (o is Artist)
@@ -73,6 +77,14 @@ namespace Desktop.ViewModel
 
             Home = new RelayCommand(o => ExecuteChangePage(new HomeViewModel(this,dataProvider)));
             Search = new RelayCommand(o => ExecuteChangePage(new SearchViewModel(this,dataProvider,o as string)));
+        }
+
+        public void HandlExceptionResponse(ExceptionResponse ex)
+        {
+            Console.WriteLine();
+            Console.WriteLine(ex.ErrorCode);
+            Console.WriteLine(ex.Message);
+            Console.WriteLine();
         }
 
         public void HandleError(Error error)

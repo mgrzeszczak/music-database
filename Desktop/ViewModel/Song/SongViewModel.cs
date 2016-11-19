@@ -24,6 +24,13 @@ namespace Desktop.ViewModel
             {
                 model = value;
                 OnPropertyChanged(nameof(Model));
+
+                OnPropertyChanged(nameof(Title));
+                OnPropertyChanged(nameof(Album));
+                OnPropertyChanged(nameof(Length));
+                OnPropertyChanged(nameof(Number));
+                OnPropertyChanged(nameof(YoutubeUrl));
+                OnPropertyChanged(nameof(Lyrics));
             }
         }
 

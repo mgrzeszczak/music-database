@@ -10,33 +10,60 @@ using RestSharp;
 
 namespace Desktop.Data
 {
-    class RestRequestFactory : IRestRequestFactory
+    public class RestRequestFactory : IRestRequestFactory
     {
+        private IJsonSerializer jsonSerializer = NewtonsoftJsonSerializer.Default;
+
         private string login, token;
+        private bool loggedIn;
 
         public RestRequestFactory()
         {
             login = "login";
             token = "token";
+            this.loggedIn = true;
         }
 
-        public void OnLoggedIn(string login, string token)
+        public void OnLogin(string login, string token)
         {
             this.login = login;
             this.token = token;
+            this.loggedIn = true;
         }
 
-        public IRestRequest Authenticate(IRestRequest request)
+        public void OnLogout()
+        {
+            login = token = null;
+            this.loggedIn = false;
+        }
+
+        private IRestRequest Create<T>(string endpoint,Method method, T body)
+        {
+            IRestRequest request = new RestRequest(endpoint,method);
+            request.JsonSerializer = jsonSerializer;
+            request.AddJsonBody(body);
+            return request;
+        }
+
+        private IRestRequest Authenticate(IRestRequest request)
         {
             request.AddHeader("AUTH-TOKEN", token);
             request.AddHeader("AUTH-LOGIN", login);
             return request;
         }
 
+        public IRestRequest CommonSearchRequest(string searchText, int pageNr, int amountPerPage)
+        {
+            var request = new RestRequest("search/all", Method.GET);
+            request.AddParameter("searchText", searchText);
+            request.AddParameter("pageNr", pageNr);
+            request.AddParameter("amountPerPage", amountPerPage);
+            return Authenticate(request);
+        }
+
         public IRestRequest LoginRequest(string login, string password)
         {
-            var request = new RestRequest("user/login",Method.POST);
-            request.AddJsonBody(new {password, login});
+            var request = Create("user/login", Method.POST, new {password, login});
             return request;
         }
 
@@ -48,35 +75,29 @@ namespace Desktop.Data
 
         public IRestRequest UserDetailsRequest()
         {
-            var request = new RestRequest("user/logout",Method.GET);
+            var request = new RestRequest("user/details",Method.GET);
             return Authenticate(request);
         }
 
         public IRestRequest RegisterRequest(User user)
         {
-            var request = new RestRequest("user/register", Method.POST);
-            request.AddJsonBody(user);
-            return request;
+            return Create("user/register", Method.POST, user);
         }
 
         public IRestRequest AddSongRequest(Song song)
         {
-            var request = new RestRequest("song/add",Method.POST);
-            request.AddJsonBody(song);
-            return Authenticate(request);
+            return Authenticate(Create("song/add",Method.POST,song));
         }
 
         public IRestRequest UpdateSongRequest(Song song)
         {
-            var request = new RestRequest("song/update", Method.PUT);
-            request.AddJsonBody(song);
-            return Authenticate(request);
+            return Authenticate(Create("song/update", Method.PUT, song));
         }
 
         public IRestRequest DeleteSongRequest(long id)
         {
-            var request = new RestRequest("song/delete", Method.DELETE);
-            request.AddParameter("id", id);
+            var request = new RestRequest("song/delete/{id}", Method.DELETE);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
@@ -98,36 +119,38 @@ namespace Desktop.Data
 
         public IRestRequest SongsFromAlbumRequest(long albumId)
         {
-            var request = new RestRequest("song/fromAlbum",Method.GET);
-            request.AddParameter("albumId",albumId);
+            var request = new RestRequest("song/fromAlbum/{id}",Method.GET);
+            request.AddUrlSegment("id", albumId.ToString());
             return Authenticate(request);
         }
 
         public IRestRequest AddAlbumRequest(Album album)
         {
-            var request = new RestRequest("album/add", Method.POST);
-            request.AddJsonBody(album);
-            return Authenticate(request);
+            return Authenticate(Create("album/add",Method.POST,album));
         }
 
         public IRestRequest UpdateAlbumRequest(Album album)
         {
-            var request = new RestRequest("album/update", Method.PUT);
-            request.AddJsonBody(album);
-            return Authenticate(request);
+            return Authenticate(Create("album/update", Method.PUT, album));
         }
 
         public IRestRequest DeleteAlbumRequest(long id)
         {
-            var request = new RestRequest("album/delete", Method.DELETE);
-            request.AddParameter("id", id);
+            var request = new RestRequest("album/delete/{id}", Method.DELETE);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
         public IRestRequest GetAlbumRequest(long id)
         {
-            var request = new RestRequest("album/get", Method.GET);
-            request.AddParameter("id", id);
+            var request = new RestRequest("album/get/{id}", Method.GET);
+            request.AddUrlSegment("id", id.ToString());
+            return Authenticate(request);
+        }
+        public IRestRequest GetAlbumWithSongsRequest(long id)
+        {
+            var request = new RestRequest("album/getWithSongs/{id}", Method.GET);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
@@ -142,36 +165,39 @@ namespace Desktop.Data
 
         public IRestRequest AlbumsByArtistRequest(long artistId)
         {
-            var request = new RestRequest("album/byArtist", Method.GET);
-            request.AddParameter("artistId",artistId);
+            var request = new RestRequest("album/byArtist/{id}", Method.GET);
+            request.AddUrlSegment("id", artistId.ToString());
             return Authenticate(request);
         }
 
         public IRestRequest AddArtistRequest(Artist artist)
         {
-            var request = new RestRequest("artist/add", Method.POST);
-            request.AddJsonBody(artist);
-            return Authenticate(request);
+            return Authenticate(Create("artist/add", Method.POST, artist));
         }
 
         public IRestRequest UpdateArtistRequest(Artist artist)
         {
-            var request = new RestRequest("album/update", Method.PUT);
-            request.AddJsonBody(artist);
-            return Authenticate(request);
+            return Authenticate(Create("artist/update", Method.PUT, artist));
         }
 
         public IRestRequest DeleteArtistRequest(long id)
         {
-            var request = new RestRequest("artist/delete", Method.DELETE);
-            request.AddParameter("id", id);
+            var request = new RestRequest("artist/delete/{id}", Method.DELETE);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
         public IRestRequest GetArtistRequest(long id)
         {
-            var request = new RestRequest("artist/get", Method.GET);
-            request.AddParameter("id", id);
+            var request = new RestRequest("artist/get/{id}", Method.GET);
+            request.AddUrlSegment("id", id.ToString());
+            return Authenticate(request);
+        }
+
+        public IRestRequest GetArtistWithAlbumsRequest(long id)
+        {
+            var request = new RestRequest("artist/getWithAlbums/{id}", Method.GET);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
@@ -186,8 +212,8 @@ namespace Desktop.Data
 
         public IRestRequest GetCommentRequest(long id)
         {
-            var request = new RestRequest("comment/get", Method.GET);
-            request.AddParameter("id", id);
+            var request = new RestRequest("comment/get/{id}", Method.GET);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
@@ -210,8 +236,8 @@ namespace Desktop.Data
 
         public IRestRequest DeleteCommentRequest(long id)
         {
-            var request = new RestRequest("comment/delete", Method.DELETE);
-            request.AddParameter("id", id);
+            var request = new RestRequest("comment/delete/{id}", Method.DELETE);
+            request.AddUrlSegment("id", id.ToString());
             return Authenticate(request);
         }
 
@@ -226,16 +252,12 @@ namespace Desktop.Data
 
         public IRestRequest AddRatingRequest(Rating rating)
         {
-            var request = new RestRequest("rating/add", Method.POST);
-            request.AddJsonBody(rating);
-            return Authenticate(request);
+            return Authenticate(Create("rating/add", Method.POST,rating));
         }
 
         public IRestRequest UpdateRatingRequest(Rating rating)
         {
-            var request = new RestRequest("rating/update", Method.PUT);
-            request.AddJsonBody(rating);
-            return Authenticate(request);
+            return Authenticate(Create("rating/update", Method.PUT, rating));
         }
 
         public IRestRequest AverageRatingRequest(EntityType entityType, long entityId)

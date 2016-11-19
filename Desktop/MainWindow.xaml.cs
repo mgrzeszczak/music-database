@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Common.Model;
+using Desktop.Data;
+using RestSharp;
 
 namespace Desktop
 {
@@ -26,5 +29,25 @@ namespace Desktop
             DataContext = new ApplicationViewModel();
             InitializeComponent();
         }
+
+        /*private IKernel SetUpNinject()
+        {
+            IKernel kernel = new StandardKernel();
+            kernel.Bind(x => x.FromThisAssembly()
+                    .IncludingNonePublicTypes()
+                    .SelectAllClasses()
+                    .Where(t => t.Name.Contains("Factory"))
+                    .BindDefaultInterface()
+                    .Configure((c, t) => c.InSingletonScope()));
+            kernel.Bind(
+                x =>x.FromThisAssembly()
+                        .IncludingNonePublicTypes()
+                        .SelectAllClasses()
+                        .Where(t => !t.Name.Contains("Factory"))
+                        .BindDefaultInterface()
+                        .Configure(c => c.InTransientScope()));
+            kernel.Bind<ApplicationViewModel>().ToSelf().InSingletonScope();
+            return kernel;
+        }*/
     }
 }

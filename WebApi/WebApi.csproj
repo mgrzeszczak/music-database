@@ -110,6 +110,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="App_Start\CentralizedPrefixProvider.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
@@ -118,10 +119,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\Authorize.cs" />
     <Compile Include="Attributes\Transactional.cs" />
-    <Compile Include="Authorization\Authentication.cs" />
     <Compile Include="Utils\AuthenticationUtils.cs" />
     <Compile Include="Authorization\AuthorizationService.cs" />
-    <Compile Include="Authorization\IAuthentication.cs" />
     <Compile Include="Authorization\IAuthorizationService.cs" />
     <Compile Include="Authorization\IUserCache.cs" />
     <Compile Include="Utils\StringUtils.cs" />
@@ -140,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\musicdb webapi.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

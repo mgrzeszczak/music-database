@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using Common.Authorization;
 using Common.Domain;
@@ -26,6 +27,7 @@ namespace WebApi.Authorization
             loginLastTimeDict.Add(testUser.Login,new DateTime(2017,1,1,1,1,1));
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void PutAuthWithLogin(string login, IAuthentication auth)
         {
             if (loginAuthDict.ContainsKey(login)) loginAuthDict.Remove(login);
@@ -34,6 +36,7 @@ namespace WebApi.Authorization
             loginLastTimeDict.Add(login,new DateTime());
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IAuthentication GetAuthByLogin(string login)
         {
             if (loginLastTimeDict.ContainsKey(login))
@@ -51,6 +54,7 @@ namespace WebApi.Authorization
             return loginAuthDict.ContainsKey(login) ? loginAuthDict[login] : null;
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void RemoveAuth(string login)
         {
             loginAuthDict.Remove(login);

@@ -57,16 +57,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Authentication.cs" />
+    <Compile Include="Authorization\IAuthentication.cs" />
     <Compile Include="Authorization\Role.cs" />
     <Compile Include="Communication\DataProviderDefaults.cs" />
     <Compile Include="Communication\IDataProvider.cs" />
     <Compile Include="Communication\IResponseDataProvider.cs" />
+    <Compile Include="Message\CommonSearchResult.cs" />
     <Compile Include="Domain\Error.cs" />
     <Compile Include="Domain\Page.cs" />
     <Compile Include="Domain\Response.cs" />
     <Compile Include="Exception\BusinessException.cs" />
+    <Compile Include="Message\ExceptionResponse.cs" />
     <Compile Include="Exception\NetworkException.cs" />
     <Compile Include="Exception\SystemException.cs" />
+    <Compile Include="Message\AlbumWithSongs.cs" />
+    <Compile Include="Message\ArtistWithAlbums.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
     <Compile Include="Model\Comment.cs" />
