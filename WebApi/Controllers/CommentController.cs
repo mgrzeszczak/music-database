@@ -10,6 +10,7 @@ using Common.Domain;
 using Common.Model;
 using Common.Model.Enum;
 using WebApi.Attributes;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -55,8 +56,9 @@ namespace WebApi.Controllers
 
         [Route("add")]
         [HttpPost]
-        public Comment Add([FromBody] Comment comment)
+        public Comment Add([FromBody, Valid] Comment comment)
         {
+            comment.User = AuthenticationUtils.CurrentAuthentication.GetUser();
             return commentService.Save(comment);
         }
 

@@ -150,7 +150,7 @@
                 <WebBrowser DockPanel.Dock="Top" Name="WebBrowser"
                             Visibility="{Binding Path=YoutubeUrl,Converter={StaticResource CollapseYoutubeOnEmptyLinkConverter}}"
                             utils:WebBrowserUtility.BindableSource="{Binding YoutubeUrl}"
-                            HorizontalAlignment="Center" Height="270" Width="480"/>
+                            HorizontalAlignment="Center" Height="270" Width="480" />
 
 
                 <ScrollViewer DockPanel.Dock="Top">

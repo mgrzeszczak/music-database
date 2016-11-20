@@ -9,6 +9,7 @@ using Common.Authorization;
 using Common.Model;
 using Common.Model.Enum;
 using WebApi.Attributes;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -25,15 +26,16 @@ namespace WebApi.Controllers
 
         [Route("get")]
         [HttpGet]
-        public Rating Get(EntityType entityType, long entityId, long userId)
+        public Rating Get(EntityType entityType, long entityId)
         {
-            return ratingService.GetUserRatingForEntity(entityType, entityId, userId);
+            return ratingService.GetUserRatingForEntity(entityType, entityId, AuthenticationUtils.CurrentAuthentication.GetUser().Id);
         }
 
         [Route("add")]
         [HttpPost]
-        public Rating Add([FromBody] Rating rating)
+        public Rating Add([FromBody, Valid] Rating rating)
         {
+            rating.User = AuthenticationUtils.CurrentAuthentication.GetUser();
             return ratingService.Save(rating);
         }
 
@@ -46,8 +48,9 @@ namespace WebApi.Controllers
 
         [Route("update")]
         [HttpPut]
-        public Rating Update([FromBody] Rating rating)
+        public Rating Update([FromBody, Valid] Rating rating)
         {
+            rating.User = AuthenticationUtils.CurrentAuthentication.GetUser();
             return ratingService.Update(rating);
         }
     }

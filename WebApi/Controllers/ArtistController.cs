@@ -62,16 +62,16 @@ namespace WebApi.Controllers
 
         [Route("add")]
         [HttpPost]
-        public Artist Add([FromBody] Artist album)
+        public Artist Add([FromBody, Valid] Artist artist)
         {
-            return artistService.Save(album);
+            return artistService.Save(artist);
         }
 
         [Route("update")]
         [HttpPut]
-        public Artist Update([FromBody] Artist album)
+        public Artist Update([FromBody, Valid] Artist artist)
         {
-            return artistService.Update(album);
+            return artistService.Update(artist);
         }
     }
 }

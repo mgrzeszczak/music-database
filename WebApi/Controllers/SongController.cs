@@ -59,14 +59,14 @@ namespace WebApi.Controllers
         
         [Route("add")]
         [HttpPost]
-        public Song Add([FromBody] Song song)
+        public Song Add([FromBody,Valid] Song song)
         {
             return songService.Save(song);
         }
 
         [Route("update")]
         [HttpPut]
-        public Song Update([FromBody] Song song)
+        public Song Update([FromBody, Valid] Song song)
         {
             return songService.Update(song);
         }

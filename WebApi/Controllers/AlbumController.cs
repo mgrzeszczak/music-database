@@ -67,14 +67,14 @@ namespace WebApi.Controllers
 
         [Route("add")]
         [HttpPost]
-        public Album Add([FromBody] Album album)
+        public Album Add([FromBody, Valid] Album album)
         {
             return albumService.Save(album);
         }
 
         [Route("update")]
         [HttpPut]
-        public Album Update([FromBody] Album album)
+        public Album Update([FromBody, Valid] Album album)
         {
             return albumService.Update(album);
         }

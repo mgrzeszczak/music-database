@@ -12,6 +12,8 @@ using Backend.Repository.Implementation;
 using Backend.Repository.Interface;
 using Backend.Service.Implementation;
 using Backend.Service.Interface;
+using NHibernate.Validator.Engine;
+using NHibernate.Validator.Event;
 using Ninject;
 using WebApi.Authorization;
 using WebApi.Controllers;
@@ -111,8 +113,8 @@ namespace WebApi.App_Start
                 this.Bind<IRatingRepository>().To<RatingRepository>();
 
                 this.Bind<IAuthorizationService>().To<AuthorizationService>();
-               
 
+                this.Bind<NHibernateSharedEngineProvider>().ToSelf().InSingletonScope();
                 //TODO: Bind to Concrete Types Here
             }
         }

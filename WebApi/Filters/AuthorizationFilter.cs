@@ -30,8 +30,21 @@ namespace WebApi.Filters
 
             var requiredRole = actionAttribute?.Role ?? controllerAttribute.Role;
 
-            var token = headers.GetValues("AUTH-TOKEN").FirstOrDefault();
-            var login = headers.GetValues("AUTH-LOGIN").FirstOrDefault();
+            IEnumerable<string> authTokenHeaders;
+            IEnumerable<string> authLoginHeaders;
+
+            var foundTokenHeaders = headers.TryGetValues("AUTH-TOKEN", out authTokenHeaders);
+            var foundLoginHeaders = headers.TryGetValues("AUTH-LOGIN", out authLoginHeaders);
+
+            if (!foundLoginHeaders || !foundTokenHeaders)
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                actionContext.Response = response;
+                return;
+            }
+
+            var token = authTokenHeaders.FirstOrDefault();
+            var login = authLoginHeaders.FirstOrDefault();
 
             if (token == null || login == null || !Authorize(requiredRole, login, token))
             {

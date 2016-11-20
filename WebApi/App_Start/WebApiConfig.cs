@@ -12,6 +12,7 @@ using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
+using NHibernate.Validator.Event;
 using WebApi.App_Start;
 using WebApi.Filters;
 
@@ -34,9 +35,11 @@ namespace WebApi
                 .ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true));
             var conf = fluentConfig.BuildConfiguration();
             var sessionFactory = conf.BuildSessionFactory();
+            
 
             config.Filters.Add(new ExceptionFilter());
             config.Filters.Add(new AuthorizationFilter());
+            config.Filters.Add(new ValidationFilter());
             config.Filters.Add(new TransactionFilter(sessionFactory));
             
 

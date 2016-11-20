@@ -34,7 +34,7 @@ namespace WebApi.Controllers
 
         [Route("register")]
         [HttpPost]
-        public User Register([FromBody] User user)
+        public User Register([FromBody,Valid] User user)
         {
             return authorizationService.Register(user);
         }
