@@ -12,20 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Desktop.ViewModel;
 
 namespace Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for DisplayArtistPage.xaml
+    /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class DisplayArtistPage : UserControl
+    public partial class LoginPage : UserControl
     {
-        public DisplayArtistPage()
+        public LoginPage()
         {
             InitializeComponent();
-            List<int> numbers = new List<int>();
-            for (int i = 1; i <= 5; i++) numbers.Add(i);
-            RatingComboBox.ItemsSource = numbers;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as LoginViewModel)?.LoginCommand.Execute(Password.Password);
         }
     }
 }

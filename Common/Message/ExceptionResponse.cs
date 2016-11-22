@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Domain;
+using Newtonsoft.Json;
 
 namespace Common.Exception
 {
@@ -20,6 +21,15 @@ namespace Common.Exception
             ErrorCode = errorCode;
             TimeStamp = DateTime.Now;
             Errors = new Dictionary<string, object>();
+        }
+
+        [JsonConstructor]
+        public ExceptionResponse(string message,DateTime timeStamp, Error errorCode, Dictionary<string, object> errors)
+        {
+            Message = message;
+            ErrorCode = errorCode;
+            TimeStamp = timeStamp;
+            Errors = errors;
         }
 
         public ExceptionResponse(string message, Error errorCode, Dictionary<string,object> errors )

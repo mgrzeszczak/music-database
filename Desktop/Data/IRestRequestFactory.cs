@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Model;
 using Common.Model.Enum;
+using Common.Model.Form;
 using RestSharp;
 
 namespace Desktop.Data
@@ -17,7 +18,7 @@ namespace Desktop.Data
         IRestRequest LoginRequest(string login, string password);
         IRestRequest LogoutRequest();
         IRestRequest UserDetailsRequest();
-        IRestRequest RegisterRequest(User user);
+        IRestRequest RegisterRequest(RegisterForm form);
 
         // SONG CONTROLLER
         IRestRequest AddSongRequest(Song song);

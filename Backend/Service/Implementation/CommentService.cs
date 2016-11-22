@@ -37,5 +37,11 @@ namespace Backend.Service.Implementation
         {
             return repository.PageByEntityIdAndTypeAndUserId(id, type, userId, pageNr, amountPerPage);
         }
+
+        public override Comment Save(Comment t)
+        {
+            t.TimeStamp = DateTime.Now;
+            return base.Save(t);
+        }
     }
 }

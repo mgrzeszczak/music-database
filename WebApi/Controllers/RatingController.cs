@@ -36,6 +36,7 @@ namespace WebApi.Controllers
         public Rating Add([FromBody, Valid] Rating rating)
         {
             rating.User = AuthenticationUtils.CurrentAuthentication.GetUser();
+            rating.TimeStamp = DateTime.Now;
             return ratingService.Save(rating);
         }
 

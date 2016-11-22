@@ -93,6 +93,7 @@
     <Compile Include="Model\Entity.cs" />
     <Compile Include="Model\Enum\EntityType.cs" />
     <Compile Include="Model\Enum\Genre.cs" />
+    <Compile Include="Model\Form\RegisterForm.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\Song.cs" />
     <Compile Include="Model\User.cs" />

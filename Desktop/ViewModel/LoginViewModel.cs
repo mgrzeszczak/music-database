@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Common.Authorization;
 using Common.Communication;
 using Desktop.Command;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -16,7 +18,7 @@ namespace Desktop.ViewModel
             
         }
 
-        protected string login;
+        private string login;
         public string Login
         {
             get
@@ -29,19 +31,6 @@ namespace Desktop.ViewModel
                 OnPropertyChanged(nameof(Login));
             }
         }
-        protected string password;
-        public string Password
-        {
-            get
-            {
-                return password;
-            }
-            set
-            {
-                password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
 
         public ICommand LoginCommand { get; set; }
 
@@ -50,7 +39,16 @@ namespace Desktop.ViewModel
             base.InitializeCommands();
             LoginCommand = new RelayCommand(a =>
             {
-                
+                string pass = a as string;
+                RestClient.ExecuteAsync<Authentication>(RequestFactory.LoginRequest(login, pass), (resp, handle) =>
+                {
+                    Console.WriteLine(resp.Content);
+                    if (resp.Succeeded())
+                    {
+                        LoginSession.Authentication = resp.Data;
+                        ApplicationViewModel.Home.Execute(null);
+                    } else ApplicationViewModel.HandlExceptionResponse(resp.ExceptionResponse());
+                });
             });
         }
     }

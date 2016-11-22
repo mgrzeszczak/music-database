@@ -15,36 +15,11 @@ namespace ConsoleRestClient
     {
         static void Main(string[] args)
         {
-            IRestClient client = new RestClient("http://localhost:55059/api");
+            var date1 = DateTime.Now;
+            var date2 = DateTime.Now.AddSeconds(300);
+            var diff = date2 - date1;
+            Console.WriteLine(diff > TimeSpan.FromMinutes(5));
 
-            var jsonSerializer = NewtonsoftJsonSerializer.Default;
-            client.AddHandler("application/json", jsonSerializer);
-            client.AddHandler("text/json", jsonSerializer);
-            client.AddHandler("text/x-json", jsonSerializer);
-            client.AddHandler("text/javascript", jsonSerializer);
-            client.AddHandler("*+json", jsonSerializer);
-
-            IRestRequestFactory factory = new RestRequestFactory();
-
-            User newUser = new User();
-            newUser.Login = "Maciek";
-            newUser.Password = "trudne_haslo";
-            newUser.Email = "maciejgrzeszczak@gmail.com";
-
-            var resp = client.Execute<User>(factory.RegisterRequest(newUser));
-
-            Console.WriteLine("Success: " + resp.Succeeded());
-            if (!resp.Succeeded())
-            {
-                var exResp = ((IJsonSerializer) resp.Request.JsonSerializer).Deserialize<ExceptionResponse>(resp);
-                Console.WriteLine(exResp.ErrorCode);
-                Console.WriteLine(exResp.Message);
-                Console.WriteLine(exResp.TimeStamp);
-            }
-            else
-            {
-                Console.WriteLine(resp.Data);
-            }
         }  
     }
 

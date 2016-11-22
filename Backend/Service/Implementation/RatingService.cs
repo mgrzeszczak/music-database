@@ -35,6 +35,6 @@ namespace Backend.Service.Implementation
         public Rating GetUserRatingForEntity(EntityType type, long entityId, long userId)
         {
             return repository.GetUserRatingForEntity(type, entityId, userId);
-        }
+        }        
     }
 }

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Desktop.Pages"
              xmlns:controls="clr-namespace:Desktop.Controls"
+             xmlns:model="clr-namespace:Common.Model;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -100,9 +101,25 @@
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource VeryLargeText}" Text="{Binding Name}"/>
                         </DockPanel>
                         <Separator/>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource LargeText}" Text="{Binding Path=Genre,Converter={StaticResource GenreDisplayTextConverter}}"/>
-                        </StackPanel>
+                        <DockPanel>
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource LargeText}" Text="{Binding Path=Genre,Converter={StaticResource GenreDisplayTextConverter}}"/>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock Text="Your rating: " VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
+
+                                <!--<ComboBox MaxDropDownHeight="200" Name="GenreComboBox" SelectedValue="{Binding Mode=TwoWay,Path=Genre}" >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentPresenter
+                                            Content="{Binding Converter={StaticResource GenreDisplayTextConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>-->
+                                <ComboBox Name="RatingComboBox" MaxDropDownHeight="200" SelectedValue="{Binding Mode=TwoWay,Path=UserRating}" 
+                                          DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right"></ComboBox>
+                                <TextBlock Text="Average score: " VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
+                                <TextBlock Text="{Binding AverageRating}" VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
+                            </StackPanel>
+                        </DockPanel>
                     </StackPanel>
                 </DockPanel>
 
@@ -246,6 +263,73 @@
                                 <TextBlock Text="Add Album" Style="{StaticResource MediumText}">
                                 </TextBlock>
                             </Button>
+                        </DockPanel>
+
+                        <DockPanel DockPanel.Dock="Top">
+                            <TextBlock DockPanel.Dock="Top" Text="Comments" HorizontalAlignment="Center" Style="{StaticResource LargeText}"/>
+                            <Separator DockPanel.Dock="Top" Visibility="Hidden" Height="5" />
+                            <DockPanel DockPanel.Dock="Top">
+                                <TextBox DockPanel.Dock="Top"  MaxLength="255"
+                                    TextWrapping="Wrap" xml:space="preserve"
+                                         Text="{Binding CommentContent, Mode=TwoWay}"
+                                         Margin="50,0,50,0"
+                                         MinWidth="300"
+                                         MinLines="3"
+                                         AcceptsReturn="True"
+                                         HorizontalAlignment="Center"
+                                         AcceptsTab="True"
+                                         Height="Auto"/>
+                                <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}" 
+                                    Command="{Binding PostComment}" HorizontalAlignment="Center">
+                                    <TextBlock Style="{StaticResource MediumText}" Text="Post"/>
+                                </Button>
+
+                            </DockPanel>
+
+                            <ListView DockPanel.Dock="Top" ItemsSource="{Binding CommentPage.Items}" MaxWidth="400" HorizontalAlignment="Center">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="model:Comment">
+                                        <Grid HorizontalAlignment="Center">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                <RowDefinition Height="Auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" Style="{StaticResource MediumText}" Text="{Binding User.Login}" HorizontalAlignment="Center"></TextBlock>
+                                            <Separator Grid.Row="1"></Separator>
+                                            <TextBlock Grid.Row="2" HorizontalAlignment="Center" 
+                                                Style="{StaticResource MediumText}"
+                                               TextWrapping="Wrap" xml:space="preserve"
+                                               Text="{Binding Content}"></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+
+                            <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Button Grid.Column="0" Grid.Row="1" 
+                                    Command="{Binding PreviousCommentPage}" 
+                                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    Background="Transparent"
+                                        Visibility="{Binding Path=CommentPage,Converter={StaticResource PreviousPageButtonVisibilityConverter}}"
+                                    Style="{StaticResource FlatTileButton}" MinHeight="40" MaxHeight="20">
+                                    <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
+                                    <!--<TextBlock Text="Prev" Style="{StaticResource MediumText}"></TextBlock>-->
+                                </Button>
+
+                                <TextBlock Style="{StaticResource MediumText}" VerticalAlignment="Center" Text="{Binding CommentPage.PageNumber}"></TextBlock>
+
+                                <Button Grid.Column="2" Grid.Row="1" 
+                                    Command="{Binding NextCommentPage}" 
+                                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Background="Transparent"
+                                        Visibility="{Binding Path=CommentPage,Converter={StaticResource NextPageButtonVisibilityConverter}}"
+                                    Style="{StaticResource FlatTileButton}" MinHeight="40" MaxHeight="20">
+                                    <controls:MonochromaticVectorImage Style="{StaticResource NextImage}"/>
+                                    <!--<TextBlock Text="Next" Style="{StaticResource MediumText}"></TextBlock>-->
+                                </Button>
+                            </DockPanel>
                         </DockPanel>
                     </DockPanel>
                 </ScrollViewer>

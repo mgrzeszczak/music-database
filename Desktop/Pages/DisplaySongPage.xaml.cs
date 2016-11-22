@@ -25,7 +25,9 @@ namespace Desktop.Pages
         public DisplaySongPage()
         {
             InitializeComponent();
-            
+            List<int> numbers = new List<int>();
+            for (int i = 1; i <= 5; i++) numbers.Add(i);
+            RatingComboBox.ItemsSource = numbers;
             //WebBrowser.Navigate("https://www.youtube.com/embed/9enOd3Z7vcY");
             WebBrowser.Navigated += wbMain_Navigated;
         }

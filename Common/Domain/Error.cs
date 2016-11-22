@@ -21,8 +21,8 @@ namespace Common.Domain
 
         LOGIN_TAKEN,
         VALIDATION_FAILED,
-        MULTIPLE_RATINGS
+        MULTIPLE_RATINGS,
+        UNAUTHORIZED
 
-        
     }
 }

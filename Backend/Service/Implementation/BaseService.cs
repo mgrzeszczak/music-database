@@ -30,7 +30,7 @@ namespace Backend.Service
             return t;
         }
 
-        public T Save(T t)
+        public virtual T Save(T t)
         {
             return this.repository.Save(t);
         }

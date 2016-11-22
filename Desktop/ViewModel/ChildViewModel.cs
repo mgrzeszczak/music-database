@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Desktop.Command;
 using Desktop.Data;
 using RestSharp;
 
@@ -38,8 +40,19 @@ namespace Desktop.ViewModel
         public IRestClient RestClient => ApplicationViewModel.RestClient;
         public IRestRequestFactory RequestFactory => ApplicationViewModel.RequestFactory;
 
+        public ICommand Logout;
         protected override void InitializeCommands()
         {
+            Logout = new RelayCommand(o =>
+            {
+                RestClient.ExecuteAsync(RequestFactory.LogoutRequest(), (resp, handle) =>
+                {
+                    if (resp.Succeeded())
+                    {
+                        ApplicationViewModel.LoginPage.Execute(null);
+                    } else ApplicationViewModel.HandlExceptionResponse(resp.ExceptionResponse());
+                });
+            });
             base.InitializeCommands();
         }
 

@@ -125,6 +125,8 @@
     <Compile Include="Controls\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AdminContentVisibilityConverter.cs" />
+    <Compile Include="Converters\NextPageButtonVisibilityConverter.cs" />
     <Compile Include="Converters\CollapseOnZeroConverter.cs" />
     <Compile Include="Converters\CollapseYoutubeOnEmptyLinkConverter.cs" />
     <Compile Include="Converters\GenreDisplayTextConverter.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\ViewModelToEditTitleConverter.cs" />
     <Compile Include="Data\IJsonSerializer.cs" />
+    <Compile Include="Data\LoginSession.cs" />
     <Compile Include="Data\RequestFactory\AlbumRequestFactory.cs" />
     <Compile Include="Data\RequestFactory\CommentRequestFactory.cs" />
     <Compile Include="Data\RequestFactory\IAlbumRequestFactory.cs" />
@@ -168,6 +171,12 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -186,6 +195,7 @@
     <Compile Include="ViewModel\ChildViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\Song\CreateSongViewModel.cs" />
     <Compile Include="ViewModel\Song\DisplaySongViewModel.cs" />
@@ -237,6 +247,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

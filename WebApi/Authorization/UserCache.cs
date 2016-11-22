@@ -33,7 +33,7 @@ namespace WebApi.Authorization
             if (loginAuthDict.ContainsKey(login)) loginAuthDict.Remove(login);
             if (loginLastTimeDict.ContainsKey(login)) loginLastTimeDict.Remove(login);
             loginAuthDict.Add(login,auth);
-            loginLastTimeDict.Add(login,new DateTime());
+            loginLastTimeDict.Add(login,DateTime.Now);
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -42,7 +42,7 @@ namespace WebApi.Authorization
             if (loginLastTimeDict.ContainsKey(login))
             {
                 var lastTime = loginLastTimeDict[login];
-                if (new DateTime() - lastTime > TOKEN_EXPIRATION_TIME)
+                if (DateTime.Now - lastTime > TOKEN_EXPIRATION_TIME)
                 {
                     loginAuthDict.Remove(login);
                     loginLastTimeDict.Remove(login);

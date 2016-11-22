@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Common.Model;
 using Common.Model.Enum;
+using Common.Model.Form;
 using RestSharp;
 
 namespace Desktop.Data
@@ -14,27 +15,9 @@ namespace Desktop.Data
     {
         private IJsonSerializer jsonSerializer = NewtonsoftJsonSerializer.Default;
 
-        private string login, token;
-        private bool loggedIn;
-
         public RestRequestFactory()
         {
-            login = "login";
-            token = "token";
-            this.loggedIn = true;
-        }
 
-        public void OnLogin(string login, string token)
-        {
-            this.login = login;
-            this.token = token;
-            this.loggedIn = true;
-        }
-
-        public void OnLogout()
-        {
-            login = token = null;
-            this.loggedIn = false;
         }
 
         private IRestRequest Create<T>(string endpoint,Method method, T body)
@@ -47,8 +30,9 @@ namespace Desktop.Data
 
         private IRestRequest Authenticate(IRestRequest request)
         {
-            request.AddHeader("AUTH-TOKEN", token);
-            request.AddHeader("AUTH-LOGIN", login);
+            if (LoginSession.Authentication == null) return request;
+            request.AddHeader("AUTH-TOKEN", LoginSession.Authentication.Token);
+            request.AddHeader("AUTH-LOGIN", LoginSession.Authentication.GetLogin());
             return request;
         }
 
@@ -79,9 +63,10 @@ namespace Desktop.Data
             return Authenticate(request);
         }
 
-        public IRestRequest RegisterRequest(User user)
+        public IRestRequest RegisterRequest(RegisterForm form)
         {
-            return Create("user/register", Method.POST, user);
+            var request = Create("user/register", Method.POST, form);
+            return request;
         }
 
         public IRestRequest AddSongRequest(Song song)

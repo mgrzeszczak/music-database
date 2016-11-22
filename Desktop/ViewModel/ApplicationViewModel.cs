@@ -32,7 +32,8 @@ namespace Desktop.ViewModel
 
             History = new BrowsingHistory(this);
             //dataProvider = new BackendResponseDataProvider();
-            CurrentViewModel = new HomeViewModel(this, dataProvider);
+            //CurrentViewModel = new HomeViewModel(this, dataProvider);
+            CurrentViewModel = new LoginViewModel(this,dataProvider);
         }
 
         public ICommand PreviousPage { get; set; }
@@ -42,6 +43,9 @@ namespace Desktop.ViewModel
 
         public ICommand Home { get; set; }
         public ICommand Search { get; set; }
+
+        public ICommand LoginPage { get; set; }
+        public ICommand RegisterPage { get; set; }
 
         protected override void InitializeCommands()
         {
@@ -77,14 +81,67 @@ namespace Desktop.ViewModel
 
             Home = new RelayCommand(o => ExecuteChangePage(new HomeViewModel(this,dataProvider)));
             Search = new RelayCommand(o => ExecuteChangePage(new SearchViewModel(this,dataProvider,o as string)));
+            LoginPage = new RelayCommand(o=>ExecuteChangePage(new LoginViewModel(this,dataProvider)));
+            RegisterPage = new RelayCommand(o => ExecuteChangePage(new RegisterViewModel(this, dataProvider)));
         }
 
         public void HandlExceptionResponse(ExceptionResponse ex)
         {
+            
             Console.WriteLine();
             Console.WriteLine(ex.ErrorCode);
             Console.WriteLine(ex.Message);
+            foreach (var e in ex.Errors) Console.WriteLine(e.Key+ " " +e.Value);
             Console.WriteLine();
+
+            switch (ex.ErrorCode)
+            {
+                case Error.ARTIST_NAME_TAKEN:
+                    MessageBox.Show("Arist with that name already exists.", "Error");
+                    break;
+                case Error.ALBUM_NAME_TAKEN:
+                    MessageBox.Show("There already is an album with that name for that artist.", "Error");
+                    break;
+                case Error.SONG_TITLE_TAKEN:
+                    MessageBox.Show("There already is a song with that title for that album.", "Error");
+                    break;
+                case Error.SONG_NUMBER_TAKEN:
+                    MessageBox.Show("There already is a song with that number for that album.", "Error");
+                    break;
+                case Error.ALBUM_NUMBER_TAKEN:
+                    MessageBox.Show("There already is an album with that number for that artist.", "Error");
+                    break;
+                case Error.UNKNOWN_ERROR:
+                    MessageBox.Show("Unknown error occured.", "Error");
+                    ExecuteChangePage(new LoginViewModel(this, dataProvider));
+                    break;
+                case Error.VALIDATION_FAILED:
+                    MessageBox.Show("Validation failure.", "Error");
+                    break;
+                case Error.LOGIN_TAKEN:
+                    MessageBox.Show("Login taken", "Error");
+                    break;
+                case Error.INVALID_VERSION:
+                    MessageBox.Show("Object was edited in the meantime", "Error");
+                    if (CurrentViewModel is EditSongViewModel)
+                    {
+                        ExecuteChangePage(new DisplaySongViewModel(this,dataProvider,(CurrentViewModel as DisplaySongViewModel).Model.Id));
+                    } else if (CurrentViewModel is EditAlbumViewModel)
+                    {
+                        ExecuteChangePage(new DisplayAlbumViewModel(this, dataProvider, (CurrentViewModel as DisplayAlbumViewModel).Model.Id));
+                    } else if (CurrentViewModel is EditArtistViewModel)
+                    {
+                        ExecuteChangePage(new DisplayArtistViewModel(this, dataProvider, (CurrentViewModel as DisplayArtistViewModel).Model.Id));
+                    }
+                    break;
+                case Error.INVALID_CREDENTIALS:
+                    MessageBox.Show("Invalid login or password", "Error");
+                    break;
+                case Error.UNAUTHORIZED:
+                    MessageBox.Show("You've been logged out.", "Error");
+                    ExecuteChangePage(new LoginViewModel(this, dataProvider));
+                    break;
+            }
         }
 
         public void HandleError(Error error)
@@ -109,6 +166,12 @@ namespace Desktop.ViewModel
                 case Error.UNKNOWN_ERROR:
                     MessageBox.Show("Unknown error occured.", "Error");
                     ExecuteChangePage(DefaultPage());
+                    break;
+                case Error.VALIDATION_FAILED:
+                    break;
+                case Error.UNAUTHORIZED:
+                    MessageBox.Show("You've been logged out.", "Error");
+                    ExecuteChangePage(new LoginViewModel(this,dataProvider));
                     break;
             }
         }

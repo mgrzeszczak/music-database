@@ -23,6 +23,9 @@ namespace Desktop.Pages
         public DisplayAlbumPage()
         {
             InitializeComponent();
+            List<int> numbers = new List<int>();
+            for (int i = 1; i <= 5; i++) numbers.Add(i);
+            RatingComboBox.ItemsSource = numbers;
         }
     }
 }

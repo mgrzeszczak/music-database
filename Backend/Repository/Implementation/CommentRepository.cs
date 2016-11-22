@@ -14,7 +14,7 @@ namespace Backend.Repository.Implementation
     {
         public Page<Comment> PageByEntityIdAndType(long id, EntityType type, int pageNr, int amountPerPage)
         {
-            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type);
+            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type).OrderByDescending(c=>c.TimeStamp);
             int count = result.Count();
             int pageCount = count / amountPerPage;
             if (count % amountPerPage != 0) pageCount += 1;
@@ -23,7 +23,7 @@ namespace Backend.Repository.Implementation
 
         public Page<Comment> PageByEntityIdAndTypeAndUserId(long id, EntityType type, long userId, int pageNr, int amountPerPage)
         {
-            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type && r.User.Id == userId);
+            var result = Queryable().Where(r => r.EntityId == id && r.EntityType == type && r.User.Id == userId).OrderByDescending(c => c.TimeStamp);
             int count = result.Count();
             int pageCount = count / amountPerPage;
             if (count % amountPerPage != 0) pageCount += 1;
