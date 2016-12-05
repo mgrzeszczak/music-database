@@ -38,8 +38,20 @@
       <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.4.0.4.4000\lib\net40\NHibernate.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate.Validator, Version=1.3.2.4000, Culture=neutral, PublicKeyToken=70154e18752585bd, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Validator.1.3.2.4000\lib\Net35\NHibernate.Validator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHibernate.Validator.Specific, Version=1.3.2.4000, Culture=neutral, PublicKeyToken=70154e18752585bd, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Validator.1.3.2.4000\lib\Net35\NHibernate.Validator.Specific.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,23 +65,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Authentication.cs" />
+    <Compile Include="Authorization\IAuthentication.cs" />
+    <Compile Include="Authorization\Role.cs" />
     <Compile Include="Communication\DataProviderDefaults.cs" />
     <Compile Include="Communication\IDataProvider.cs" />
     <Compile Include="Communication\IResponseDataProvider.cs" />
+    <Compile Include="Json\CustomStringEnumConverter.cs" />
+    <Compile Include="Message\CommonSearchResult.cs" />
     <Compile Include="Domain\Error.cs" />
     <Compile Include="Domain\Page.cs" />
     <Compile Include="Domain\Response.cs" />
     <Compile Include="Exception\BusinessException.cs" />
+    <Compile Include="Message\ExceptionResponse.cs" />
     <Compile Include="Exception\NetworkException.cs" />
     <Compile Include="Exception\SystemException.cs" />
+    <Compile Include="Message\AlbumWithSongs.cs" />
+    <Compile Include="Message\ArtistWithAlbums.cs" />
     <Compile Include="Model\Album.cs" />
     <Compile Include="Model\Artist.cs" />
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\Constraints\AlbumConstraints.cs" />
     <Compile Include="Model\Constraints\ArtistConstraints.cs" />
+    <Compile Include="Model\Constraints\CommentConstraints.cs" />
+    <Compile Include="Model\Constraints\RatingConstraints.cs" />
     <Compile Include="Model\Constraints\SongConstraints.cs" />
+    <Compile Include="Model\Constraints\UserConstraints.cs" />
     <Compile Include="Model\Entity.cs" />
-    <Compile Include="Model\Genre.cs" />
+    <Compile Include="Model\Enum\EntityType.cs" />
+    <Compile Include="Model\Enum\Genre.cs" />
+    <Compile Include="Model\Form\RegisterForm.cs" />
+    <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\Song.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Validation\Attributes\Password.cs" />
+    <Compile Include="Model\Validation\Validators\PasswordValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

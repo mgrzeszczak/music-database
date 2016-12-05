@@ -28,6 +28,11 @@ namespace Desktop.ViewModel
             {
                 model = value;
                 OnPropertyChanged(nameof(Model));
+
+                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(ImageUrl));
+                OnPropertyChanged(nameof(Genre));
             }
         }
 

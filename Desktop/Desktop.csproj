@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2A4D3468-B4CB-4437-99D6-68452A85CD10}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Desktop</RootNamespace>
     <AssemblyName>Desktop</AssemblyName>
@@ -47,6 +47,22 @@
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Conventions, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Extensions.Conventions.3.2.0.0\lib\net45-full\Ninject.Extensions.Conventions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -109,13 +125,31 @@
     <Compile Include="Controls\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AdminContentVisibilityConverter.cs" />
+    <Compile Include="Converters\NextPageButtonVisibilityConverter.cs" />
     <Compile Include="Converters\CollapseOnZeroConverter.cs" />
     <Compile Include="Converters\CollapseYoutubeOnEmptyLinkConverter.cs" />
     <Compile Include="Converters\GenreDisplayTextConverter.cs" />
     <Compile Include="Converters\InvisibleOnSearchFocusAny.cs" />
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\ViewModelToEditTitleConverter.cs" />
-    <Compile Include="Data\AsyncResponseDataProvider.cs" />
+    <Compile Include="Data\IJsonSerializer.cs" />
+    <Compile Include="Data\LoginSession.cs" />
+    <Compile Include="Data\RequestFactory\AlbumRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\CommentRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\IAlbumRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\IArtistRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\ICommentRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\IRatingRequestFactory.cs" />
+    <Compile Include="Data\IRestRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\ISongRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\IUserRequestFactory.cs" />
+    <Compile Include="Data\NewtonsoftJsonSerializer.cs" />
+    <Compile Include="Data\RequestFactory\RatingRequestFactory.cs" />
+    <Compile Include="Data\RestRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\SongRequestFactory.cs" />
+    <Compile Include="Data\RequestFactory\UserRequestFactory.cs" />
+    <Compile Include="Data\RestResponseExtensions.cs" />
     <Compile Include="Pages\DisplayAlbumPage.xaml.cs">
       <DependentUpon>DisplayAlbumPage.xaml</DependentUpon>
     </Compile>
@@ -137,6 +171,12 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -154,6 +194,8 @@
     <Compile Include="ViewModel\Artist\EditArtistViewModel.cs" />
     <Compile Include="ViewModel\ChildViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SearchViewModel.cs" />
     <Compile Include="ViewModel\Song\CreateSongViewModel.cs" />
     <Compile Include="ViewModel\Song\DisplaySongViewModel.cs" />
@@ -205,6 +247,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

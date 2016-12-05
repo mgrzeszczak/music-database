@@ -50,6 +50,12 @@
         <DataTemplate DataType="{x:Type vm:SearchViewModel}">
             <page:SearchPage/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <page:LoginPage/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
+            <page:RegisterPage/>
+        </DataTemplate>
         
     </Window.Resources>
 

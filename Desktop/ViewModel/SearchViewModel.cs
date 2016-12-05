@@ -94,7 +94,6 @@ namespace Desktop.ViewModel
 
 
             PreviousResultPage = new RelayCommand(o=>Page>1,o => {
-                Console.WriteLine("Prev result page - current page: " + Page);
                 if (Page == 1) return;
                 Page--;
                 SearchByText(SearchText);
@@ -113,56 +112,95 @@ namespace Desktop.ViewModel
             });
         }
 
+        private void ShowSearchResults()
+        {
+            SongResult = songPage != null ? new ObservableCollection<Song>(songPage.Items) : new ObservableCollection<Song>();
+            AlbumResult = albumPage != null ? new ObservableCollection<Album>(albumPage.Items) : new ObservableCollection<Album>();
+            ArtistResult = artistPage != null ? new ObservableCollection<Artist>(artistPage.Items) : new ObservableCollection<Artist>();
+        }
+
         private void SearchByText(string text)
         {
-            Console.WriteLine("Searching for " + text);
-
             songPage = null;
             albumPage = null;
             artistPage = null;
 
             int amount = searchFocus == SearchFocus.Any ? 3 : 10;
 
-            if (SearchFocus == SearchFocus.Any || SearchFocus == SearchFocus.Songs)
+            if (SearchFocus == SearchFocus.Any)
             {
-                Response<Page<Song>> response = DataProvider.SearchSongsByTitle(text, Page, amount);
-                if (!response.Status)
+                RestClient.ExecuteAsync<CommonSearchResult>(RequestFactory.CommonSearchRequest(text, Page, amount), (r, c) =>
                 {
-                    ApplicationViewModel.HandleError(response.Error);
-                    return;
-                }
-                songPage = response.Content;
-            }
-            if (SearchFocus == SearchFocus.Any || SearchFocus == SearchFocus.Albums)
-            {
-                Response<Page<Album>> response = DataProvider.SearchAlbumsByName(text, Page, amount);
-                if (!response.Status)
-                {
-                    ApplicationViewModel.HandleError(response.Error);
-                    return;
-                }
-                albumPage = response.Content;
-            }
-            if (SearchFocus == SearchFocus.Any || SearchFocus == SearchFocus.Artists)
-            {
-                Response<Page<Artist>> response = DataProvider.SearchArtistsByName(text, Page, amount);
-                if (!response.Status)
-                {
-                    ApplicationViewModel.HandleError(response.Error);
-                    return;
-                }
-                artistPage = response.Content;
+                    if (r.Succeeded())
+                    {
+                        var data = r.Data;
+                        songPage = data.songResult;
+                        albumPage = data.albumResult;
+                        artistPage = data.artistResult;
+                        ShowSearchResults();
+                    }
+                    else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                });
             }
 
-            SongResult = songPage != null ? new ObservableCollection<Song>(songPage.Items) : new ObservableCollection<Song>();
-            AlbumResult = albumPage != null ? new ObservableCollection<Album>(albumPage.Items) : new ObservableCollection<Album>();
-            ArtistResult = artistPage != null ? new ObservableCollection<Artist>(artistPage.Items) : new ObservableCollection<Artist>();
-            
+            if (SearchFocus == SearchFocus.Songs)
+            {
+                RestClient.ExecuteAsync<Page<Song>>(RequestFactory.SearchSongsRequest(text, Page, amount), (r, c) =>
+                {
+                    if (r.Succeeded())
+                    {
+                        songPage = r.Data;
+                        ShowSearchResults();
+                    }
+                    else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                });
+                /*Response<Page<Song>> response = DataProvider.SearchSongsByTitle(text, Page, amount);
+                if (!response.Status)
+                {
+                    ApplicationViewModel.HandleError(response.Error);
+                    return;
+                }
+                songPage = response.Content;*/
+            }
+            if (SearchFocus == SearchFocus.Albums)
+            {
+                RestClient.ExecuteAsync<Page<Album>>(RequestFactory.SearchAlbumsRequest(text, Page, amount), (r, c) =>
+                {
+                    if (r.Succeeded())
+                    {
+                        albumPage = r.Data;
+                        ShowSearchResults();
+                    }
+                    else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                });
+                /*Response<Page<Album>> response = DataProvider.SearchAlbumsByName(text, Page, amount);
+                if (!response.Status)
+                {
+                    ApplicationViewModel.HandleError(response.Error);
+                    return;
+                }
+                albumPage = response.Content;*/
+            }
+            if (SearchFocus == SearchFocus.Artists)
+            {
+                RestClient.ExecuteAsync<Page<Artist>>(RequestFactory.SearchArtistsRequest(text, Page, amount), (r, c) =>
+                {
+                    if (r.Succeeded())
+                    {
+                        artistPage = r.Data;
+                        ShowSearchResults();
+                    }
+                    else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                });
+                /*Response<Page<Artist>> response = DataProvider.SearchArtistsByName(text, Page, amount);
+                if (!response.Status)
+                {
+                    ApplicationViewModel.HandleError(response.Error);
+                    return;
+                }
+                artistPage = response.Content;*/
+            }
 
-            /*
-            Console.WriteLine(SongResult.Count());
-            Console.WriteLine(AlbumResult.Count());
-            Console.WriteLine(ArtistResult.Count());*/
         }
 
 

@@ -10,5 +10,6 @@ namespace Common.Model
     public abstract class Entity<ID>
     {
         public virtual ID Id {get; set;}
+        public virtual long Version { get; set; }
     }
 }

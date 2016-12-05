@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -22,12 +23,20 @@ namespace Desktop.ViewModel
         protected override void InitializeCommands()
         {
             Submit = new RelayCommand(o => {
-                Response<Artist> response = DataProvider.SaveArtist(model);
+
+                ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.AddArtistRequest(model),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded()) ApplicationViewModel.DisplayView.Execute(r.Data);
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+
+                /*Response<Artist> response = DataProvider.SaveArtist(model);
                 if (!response.Status)
                 {
                     ApplicationViewModel.HandleError(response.Error);
                 }
-                else ApplicationViewModel.DisplayView.Execute(response.Content);
+                else ApplicationViewModel.DisplayView.Execute(response.Content);*/
             });
             base.InitializeCommands();
         }

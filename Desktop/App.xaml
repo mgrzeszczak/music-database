@@ -37,6 +37,9 @@
             <converters:GenreDisplayTextConverter x:Key="GenreDisplayTextConverter"/>
             <converters:ViewModelToEditTitleConverter x:Key="ViewModelToEditTitleConverter"/>
             <converters:CollapseYoutubeOnEmptyLinkConverter x:Key="CollapseYoutubeOnEmptyLinkConverter"/>
+            <converters:NextPageButtonVisibilityConverter x:Key="NextPageButtonVisibilityConverter"/>
+            <converters:PreviousPageButtonVisibilityConverter x:Key="PreviousPageButtonVisibilityConverter"/>
+            <converters:AdminContentVisibilityConverter x:Key="AdminContentVisibilityConverter"/>
 
             <Color x:Key="WindowBackgroundColor">#202020</Color>
             <Color x:Key="DeepPurpleColor">#491f91</Color>
@@ -182,6 +185,7 @@
                 <Setter Property="Visibility" Value="Hidden"/>
             </Style>
 
+            <!--
             <Style TargetType="{x:Type ListViewItem}">
                 <Setter Property="Background" Value="{StaticResource WindowBackgroundColorBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
@@ -221,7 +225,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
+            </Style>-->
 
             <Style TargetType="Image">
                 <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>

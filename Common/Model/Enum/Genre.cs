@@ -4,9 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Common.Model.Enum
 {
+    [JsonConverter(typeof(CustomStringEnumConverter))]
     public enum Genre
     {
         [Description("Rock")]

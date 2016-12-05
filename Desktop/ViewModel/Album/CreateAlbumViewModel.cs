@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -28,13 +29,21 @@ namespace Desktop.ViewModel
         {
             base.InitializeCommands();
             Submit = new RelayCommand(o => {
-                Response<Album> response = DataProvider.SaveAlbum(model);
+
+                ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.AddAlbumRequest(model),
+                    (r, c) =>
+                    {
+                        if (r.Succeeded()) ApplicationViewModel.DisplayView.Execute(r.Data);
+                        else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
+                    });
+
+                /*Response<Album> response = DataProvider.SaveAlbum(model);
                 Console.WriteLine(response.Status);
                 Console.WriteLine(response.Content);
                 if (!response.Status)
                 {
                     ApplicationViewModel.HandleError(response.Error);
-                } else ApplicationViewModel.DisplayView.Execute(response.Content);
+                } else ApplicationViewModel.DisplayView.Execute(response.Content);*/
             });
         }
     }

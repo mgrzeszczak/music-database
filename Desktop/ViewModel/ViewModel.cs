@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Model;
+using Desktop.Data;
 
 namespace Desktop.ViewModel
 {
@@ -20,7 +22,7 @@ namespace Desktop.ViewModel
 
         protected void OnPropertyChanged(string propertyName)
         {
-            this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(() => this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName))));
         }
 
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -36,5 +38,7 @@ namespace Desktop.ViewModel
         {
 
         }
+
+        public User User => LoginSession.Authentication.User;
     }
 }

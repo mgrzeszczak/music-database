@@ -24,6 +24,14 @@ namespace Desktop.ViewModel
             {
                 model = value;
                 OnPropertyChanged(nameof(Model));
+
+                OnPropertyChanged(nameof(Length));
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(NameYear));
+                OnPropertyChanged(nameof(Year));
+                OnPropertyChanged(nameof(Number));
+                OnPropertyChanged(nameof(CoverUrl));
+                OnPropertyChanged(nameof(Artist));
             }
         }
 
@@ -33,7 +41,7 @@ namespace Desktop.ViewModel
             set
             {
                 model.Length = value;
-                OnPropertyChanged("Length");
+                OnPropertyChanged(nameof(Length));
             }
         }
 
