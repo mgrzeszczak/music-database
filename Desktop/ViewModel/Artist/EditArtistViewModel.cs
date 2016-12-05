@@ -18,8 +18,8 @@ namespace Desktop.ViewModel
         {
             ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.GetArtistRequest(artistId),
                     (r, c) =>
-                    {
-                        if (r.Succeeded()) model = r.Data;
+                    {                        
+                        if (r.Succeeded()) Model = r.Data;
                         else ApplicationViewModel.HandlExceptionResponse(r.ExceptionResponse());
                     });
             /*Response<Artist> respArtist = DataProvider.GetArtistById(artistId);
