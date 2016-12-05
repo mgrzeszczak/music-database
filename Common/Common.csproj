@@ -71,6 +71,7 @@
     <Compile Include="Communication\DataProviderDefaults.cs" />
     <Compile Include="Communication\IDataProvider.cs" />
     <Compile Include="Communication\IResponseDataProvider.cs" />
+    <Compile Include="Json\CustomStringEnumConverter.cs" />
     <Compile Include="Message\CommonSearchResult.cs" />
     <Compile Include="Domain\Error.cs" />
     <Compile Include="Domain\Page.cs" />

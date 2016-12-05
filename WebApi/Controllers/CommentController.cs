@@ -59,6 +59,7 @@ namespace WebApi.Controllers
         public Comment Add([FromBody, Valid] Comment comment)
         {
             comment.User = AuthenticationUtils.CurrentAuthentication.GetUser();
+            comment.TimeStamp = DateTime.Now;
             return commentService.Save(comment);
         }
 

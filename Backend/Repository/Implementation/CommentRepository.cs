@@ -18,7 +18,7 @@ namespace Backend.Repository.Implementation
             int count = result.Count();
             int pageCount = count / amountPerPage;
             if (count % amountPerPage != 0) pageCount += 1;
-            return Page(pageNr, amountPerPage, c => c.TimeStamp, Comparer<DateTime>.Default, result, count, pageCount);
+            return Page(pageNr, amountPerPage, c => c.TimeStamp, Comparer<DateTime>.Create((a,b)=>a>b?-1:a==b?0:1), result, count, pageCount);
         }
 
         public Page<Comment> PageByEntityIdAndTypeAndUserId(long id, EntityType type, long userId, int pageNr, int amountPerPage)

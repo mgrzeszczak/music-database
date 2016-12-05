@@ -10,7 +10,6 @@ namespace Common.Model
 {
     public class Comment : Entity<long>
     {
-        [NotNull]
         public virtual User User { get; set; }
         [NotNullNotEmpty]
         public virtual string Content { get; set; }

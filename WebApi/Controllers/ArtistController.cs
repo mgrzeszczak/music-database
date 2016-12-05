@@ -11,6 +11,7 @@ using Common.Authorization;
 using Common.Domain;
 using Common.Message;
 using Common.Model;
+using Common.Model.Enum;
 using Ninject;
 using WebApi.Attributes;
 
@@ -72,6 +73,13 @@ namespace WebApi.Controllers
         public Artist Update([FromBody, Valid] Artist artist)
         {
             return artistService.Update(artist);
+        }
+
+        [Route("genres")]
+        [HttpGet]
+        public Genre[] GetAllGenres()
+        {
+            return Enum.GetValues(typeof(Genre)) as Genre[];
         }
     }
 }

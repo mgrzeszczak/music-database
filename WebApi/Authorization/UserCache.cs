@@ -39,6 +39,7 @@ namespace WebApi.Authorization
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IAuthentication GetAuthByLogin(string login)
         {
+            /*
             if (loginLastTimeDict.ContainsKey(login))
             {
                 var lastTime = loginLastTimeDict[login];
@@ -50,7 +51,7 @@ namespace WebApi.Authorization
                 }
                 loginLastTimeDict.Remove(login);
                 loginLastTimeDict.Add(login, new DateTime());
-            }
+            }*/
             return loginAuthDict.ContainsKey(login) ? loginAuthDict[login] : null;
         }
 

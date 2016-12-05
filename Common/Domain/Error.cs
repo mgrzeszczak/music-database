@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Json;
+using Newtonsoft.Json;
 
 namespace Common.Domain
 {
+    [JsonConverter(typeof(CustomStringEnumConverter))]
     public enum Error
     {
         UNKNOWN_ERROR,
