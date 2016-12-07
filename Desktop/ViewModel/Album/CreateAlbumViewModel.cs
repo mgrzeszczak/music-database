@@ -30,7 +30,7 @@ namespace Desktop.ViewModel
             base.InitializeCommands();
             Submit = new RelayCommand(o => {
 
-                ApplicationViewModel.RestClient.ExecuteAsync<Artist>(ApplicationViewModel.RequestFactory.AddAlbumRequest(model),
+                ApplicationViewModel.RestClient.ExecuteAsync<Album>(ApplicationViewModel.RequestFactory.AddAlbumRequest(model),
                     (r, c) =>
                     {
                         if (r.Succeeded()) ApplicationViewModel.DisplayView.Execute(r.Data);

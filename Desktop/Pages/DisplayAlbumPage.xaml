@@ -255,7 +255,21 @@
                                                 <RowDefinition Height="Auto"></RowDefinition>
                                                 <RowDefinition Height="Auto"></RowDefinition>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" Style="{StaticResource MediumText}" Text="{Binding User.Login}" HorizontalAlignment="Center"></TextBlock>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <TextBlock VerticalAlignment="Center" Grid.Row="0" Style="{StaticResource MediumText}" Text="{Binding User.Login}" HorizontalAlignment="Center"></TextBlock>
+                                                <Button Grid.Column="0" Grid.Row="1" 
+                                                    Command="{Binding Path=DataContext.AdminDeleteComment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
+                                                    CommandParameter="{Binding}"
+                                                    HorizontalAlignment="Right" 
+                                                        VerticalAlignment="Center"
+                                                    Background="Transparent"
+                                                        Visibility="{Binding Path=User,Converter={StaticResource AdminContentVisibilityConverter}}"
+                                                    Style="{StaticResource FlatTileButton}" Margin="5" Height="30">
+                                                    <controls:MonochromaticVectorImage Style="{StaticResource GarbageImage}"/>
+                                                    <!--<TextBlock Text="Prev" Style="{StaticResource MediumText}"></TextBlock>-->
+                                                </Button>
+                                            </StackPanel>
+                                            <!--<TextBlock Grid.Row="0" Style="{StaticResource MediumText}" Text="{Binding User.Login}" HorizontalAlignment="Center"></TextBlock>-->
                                             <Separator Grid.Row="1"></Separator>
                                             <TextBlock Grid.Row="2" HorizontalAlignment="Center" 
                                                 Style="{StaticResource MediumText}"

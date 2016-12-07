@@ -70,6 +70,7 @@ namespace Desktop.ViewModel
         private void UpdateUserRating()
         {
             if (rating != null) rating.Value = userRating;
+            if (userRating < 1 || userRating > 5) return; 
             RestClient.ExecuteAsync<Rating>(
                 rating == null ?
                 RequestFactory.AddRatingRequest(new Rating()
@@ -185,6 +186,8 @@ namespace Desktop.ViewModel
             return new DisplayAlbumViewModel(ApplicationViewModel, DataProvider, model.Id);
         }
 
+        public ICommand AdminDeleteComment { get; set; }
+
         protected override void InitializeCommands()
         {
             base.InitializeCommands();
@@ -227,6 +230,17 @@ namespace Desktop.ViewModel
                 RestClient.ExecuteAsync<Comment>(RequestFactory.AddCommentRequest(comment), (resp, handle) =>
                 {
                     if (resp.Succeeded()) RefreshComments(Model.Id, 1);
+                    else ApplicationViewModel.HandlExceptionResponse(resp.ExceptionResponse());
+                });
+            });
+
+            AdminDeleteComment = new RelayCommand(o =>
+            {
+                if (!(o is Comment)) return;
+                Comment comment = o as Comment;
+                RestClient.ExecuteAsync(RequestFactory.DeleteCommentRequest(comment.Id), (resp, handle) =>
+                {
+                    if (resp.Succeeded()) RefreshComments(Model.Id, CommentPage.PageNumber);
                     else ApplicationViewModel.HandlExceptionResponse(resp.ExceptionResponse());
                 });
             });

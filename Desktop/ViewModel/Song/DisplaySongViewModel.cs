@@ -150,6 +150,7 @@ namespace Desktop.ViewModel
         private void UpdateUserRating()
         {
             if (rating != null) rating.Value = userRating;
+            if (userRating < 1 || userRating > 5) return;
             RestClient.ExecuteAsync<Rating>(
                 rating == null? 
                 RequestFactory.AddRatingRequest(new Rating()
