@@ -24,38 +24,63 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">
-            <!--<TextBlock x:Name="WelcomeText" Style="{StaticResource TitleText}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="MusicDB" VerticalAlignment="Center"/>
-            <Image Source="../Resources/musical-note.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" RenderOptions.BitmapScalingMode="Fant"/>-->
-            <TextBlock x:Name="WelcomeText" Foreground="Black" Style="{StaticResource TitleText}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="MusicDB" VerticalAlignment="Center"/>
+            <TextBlock x:Name="WelcomeText" 
+                       Foreground="Black" 
+                       Style="{StaticResource TitleText}" 
+                       HorizontalAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       Text="MusicDB" 
+                       VerticalAlignment="Center"/>
             <controls:MonochromaticVectorImage Margin="10,0,0,0" Style="{StaticResource LogoImage}" ImageBrush="Black"/>
         </StackPanel>
 
         <controls:SearchBar Grid.Row="2" Grid.Column="1" Height="40" DelayedSearchCommand="{Binding ApplicationViewModel.Search}" SearchText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+        <!--Logout-->
+        <StackPanel Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
+            <TextBlock Style="{StaticResource MediumText}"
+                       Foreground="Black"
+                       Text="Logged in as"
+                       VerticalAlignment="Center"/>
+            <Button Style="{StaticResource TransparentImageButton}"
+                    VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource MediumText}"
+                           Foreground="Black"
+                           Text="{Binding User.Login}"/>
+            </Button>
+            <Separator/>
+            <Button Background="Transparent"
+                    VerticalAlignment="Center"
+                    Command="{Binding Logout}">
+                <TextBlock Style="{StaticResource MediumText}"
+                           Foreground="{StaticResource AccentColorBrush}"
+                           Text="Log out"/>
+            </Button>
+            
+        </StackPanel>
         
-        <!--
-        <minor:SearchBar Grid.Row="2" Grid.Column="1" Height="40"
-                         DelayedSearchCommand="{Binding DelayedSearch}" SearchText="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        -->
-
-        <controls:MonochromaticVectorImage 
-            Height="30"
-            Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"
-            Style="{StaticResource CopyrightImage}" ImageBrush="Black">
-            <controls:MonochromaticVectorImage.ToolTip>
+        
+        <!--Credits-->
+        <Label Height="30"
+               Grid.Column="0" 
+               Grid.Row="3" 
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Left"
+               Background="Transparent">
+            <controls:MonochromaticVectorImage Style="{StaticResource CopyrightImage}" 
+                                               ImageBrush="Black"/>
+            <Label.ToolTip>
                 <TextBlock Foreground="{StaticResource DarkFontColorBrush}"
                            Text="Icons designed by Freepik and distributed by Flaticon"/>
-            </controls:MonochromaticVectorImage.ToolTip>
-        </controls:MonochromaticVectorImage>
+            </Label.ToolTip>
+        </Label>
 
-        <!--
-        <TextBlock Text="Credits" Style="{StaticResource MediumText}"
-                   Grid.Column="0" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                   FontWeight="Bold" FontSize="20" ToolTipService.InitialShowDelay="100">
-            <TextBlock.ToolTip>
-                <TextBlock Foreground="{StaticResource DarkFontColorBrush}"
-                           Text="Icons designed by Freepik and distributed by Flaticon"/>
-            </TextBlock.ToolTip>
-        </TextBlock>-->
     </Grid>
 
 </UserControl>

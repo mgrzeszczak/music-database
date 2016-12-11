@@ -40,7 +40,7 @@ namespace Desktop.ViewModel
         public IRestClient RestClient => ApplicationViewModel.RestClient;
         public IRestRequestFactory RequestFactory => ApplicationViewModel.RequestFactory;
 
-        public ICommand Logout;
+        public ICommand Logout { get; set; }
         protected override void InitializeCommands()
         {
             Logout = new RelayCommand(o =>

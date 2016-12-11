@@ -41,12 +41,15 @@
             <converters:PreviousPageButtonVisibilityConverter x:Key="PreviousPageButtonVisibilityConverter"/>
             <converters:AdminContentVisibilityConverter x:Key="AdminContentVisibilityConverter"/>
 
+
             <Color x:Key="WindowBackgroundColor">#202020</Color>
-            <Color x:Key="DeepPurpleColor">#491f91</Color>
+            <!--<Color x:Key="DeepPurpleColor">#491f91</Color>-->
+            <Color x:Key="DeepPurpleColor">#DE8451</Color>
             <Color x:Key="LightFontColor">#FAFAFA</Color>
             <Color x:Key="DarkFontColor">#050505</Color>
             <Color x:Key="LightControlBackgroundColor">#AAAAAA</Color>
             <Color x:Key="DarkControlBackgroundColor">#444444</Color>
+            <Color x:Key="AccentColor">#DE8451</Color>
             
             
 
@@ -56,6 +59,7 @@
             <SolidColorBrush x:Key="DarkFontColorBrush" Color="{StaticResource DarkFontColor}"/>
             <SolidColorBrush x:Key="LightControlBackgroundColorBrush" Color="{StaticResource LightControlBackgroundColor}"/>
             <SolidColorBrush x:Key="DarkControlBackgroundColorBrush" Color="{StaticResource DarkControlBackgroundColor}"/>
+            <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"/>
 
             
            
@@ -170,6 +174,33 @@
                 </Setter>
             </Style>
             <Style TargetType="Button" BasedOn="{StaticResource FlatTileButton}"/>
+
+            <Style x:Key="FlatEuroButton" TargetType="Button">
+                <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}"/>
+                <Setter Property="Background" Value="{StaticResource WindowBackgroundColorBrush}"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Name="Border"
+                                    CornerRadius="0,15,0,15"
+                                    BorderThickness="2"
+                                    BorderBrush="{TemplateBinding Background}"
+                                    Background="{TemplateBinding Background}"
+                                    Padding="10"
+                                    Margin="-1">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentColorBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
 
             <!--LISTVIEW-->

@@ -14,69 +14,88 @@
         <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
     </UserControl.Background>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="1"
+              Background="{StaticResource WindowBackgroundColorBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
 
-    <DockPanel>
-        <!--HEADER-->
-        <Grid x:Name="HeaderGrid" DockPanel.Dock="Top" Height="Auto" Background="{StaticResource WindowBackgroundColorBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Button Grid.Row="0" 
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Command="{Binding ApplicationViewModel.LoginPage, Mode=OneTime}" 
+                    Margin="5" 
+                    Height="40" 
+                    Background="{StaticResource WindowBackgroundColorBrush}">
+                <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
+            </Button>
 
-
-            <Viewbox Height="40" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <StackPanel  Orientation="Horizontal" >
-                    <Button Command="{Binding ApplicationViewModel.LoginPage, Mode=OneTime}" Margin="5" Height="40" Background="{StaticResource WindowBackgroundColorBrush}">
-                        <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
-                    </Button>
-
-                </StackPanel>
-            </Viewbox>
-        </Grid>
-
-
-
-        <!-- CONTENT -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25*"/>
-                <ColumnDefinition Width="92*"/>
-                <ColumnDefinition Width="8*"/>
-            </Grid.ColumnDefinitions>
-
-            <DockPanel x:Name="ContentPanel" Grid.Column="1" Background="{StaticResource WindowBackgroundColorBrush}" Grid.ColumnSpan="2">
-                <Grid VerticalAlignment="Center">
+            <DockPanel Grid.Row="1"
+                       MinWidth="300"
+                       MaxWidth="500"
+                       HorizontalAlignment="Center">
+                <TextBlock DockPanel.Dock="Top" 
+                           HorizontalAlignment="Center"
+                           Style="{StaticResource LargeText}" 
+                           Text="Register to MusicDB"/>
+                <Grid DockPanel.Dock="Top">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock HorizontalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource LargeText}" Text="Register to MusicDB"></TextBlock>
-
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource MediumText}" Grid.Column="1" Grid.Row="1" Text="Login"></TextBlock>
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource MediumText}" Grid.Column="1" Grid.Row="2" Text="Password"></TextBlock>
-                    <TextBlock HorizontalAlignment="Center" Style="{StaticResource MediumText}" Grid.Column="1" Grid.Row="3" Text="Email"></TextBlock>
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Mode=TwoWay,Path=Login}"></TextBox>
-                    <!--<TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Mode=TwoWay,Path=Password}"></TextBox>-->
-                    <PasswordBox Name="Password" Grid.Column="2" Grid.Row="2" PasswordChar="*"></PasswordBox>
-                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Mode=TwoWay,Path=Email}"></TextBox>
-                    <Button 
-                    Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"  VerticalAlignment="Top" Background="{StaticResource WindowBackgroundColorBrush}" Click="Button_Click">
-                        <TextBlock Text="Register" Style="{StaticResource MediumText}" />
-                    </Button>
-
+                    <TextBlock Grid.Row="0" 
+                               Grid.Column="0" 
+                               HorizontalAlignment="Right" 
+                               Style="{StaticResource MediumText}" 
+                               Text="Login"/>
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0" 
+                               HorizontalAlignment="Right" 
+                               Style="{StaticResource MediumText}" 
+                               Text="Password"/>
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0" 
+                               HorizontalAlignment="Right" 
+                               Style="{StaticResource MediumText}" 
+                               Text="Email"/>
+                    
+                    <TextBox Grid.Row="0"
+                             Grid.Column="2" 
+                             Text="{Binding Mode=TwoWay,Path=Login}"/>
+                    <PasswordBox Grid.Row="1"
+                                 Grid.Column="2" 
+                                 Name="Password" 
+                                 PasswordChar="*"/>
+                    <TextBox Grid.Row="2"
+                             Grid.Column="2"
+                             Text="{Binding Mode=TwoWay,Path=Email}"/>
                 </Grid>
+
+                <Button DockPanel.Dock="Top"
+                        HorizontalAlignment="Right" 
+                        Background="{StaticResource WindowBackgroundColorBrush}" 
+                        Click="Button_Click"
+                        IsDefault="True">
+                    <TextBlock Text="Register" 
+                               Style="{StaticResource MediumText}"
+                               Foreground="{StaticResource AccentColorBrush}"/>
+                </Button>
             </DockPanel>
         </Grid>
-    </DockPanel>
+    </Grid>
 </UserControl>

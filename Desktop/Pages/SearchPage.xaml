@@ -14,302 +14,6 @@
         <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
     </UserControl.Background>
 
-    <!--
-    <DockPanel>
-        
-        <Grid x:Name="HeaderGrid" DockPanel.Dock="Top" Height="Auto" Background="{StaticResource WindowBackgroundColorBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Viewbox Height="40" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal" >
-                    <Button
-                        Margin="5" Height="40"
-                        Command="{Binding ApplicationViewModel.Home, Mode=OneTime}" 
-                        Background="{StaticResource WindowBackgroundColorBrush}"
-                        Style="{StaticResource FlatTileButton}">
-                        
-
-                        <controls:MonochromaticVectorImage Style="{StaticResource HouseImage}"/>
-                        
-                    </Button>
-                    <Button
-                        Margin="5" Height="40"
-                        Command="{Binding ApplicationViewModel.PreviousPage, Mode=OneTime}" 
-                        Background="{StaticResource WindowBackgroundColorBrush}"
-                        Style="{StaticResource FlatTileButton}">
-                        
-                        <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
-                    </Button>
-                    
-                </StackPanel>
-            </Viewbox>
-            
-            
-
-            <controls:SearchBar Grid.Column="1" 
-                             VerticalAlignment="Center" 
-                             Height="40" Margin="5"
-                             SearchText="{Binding SearchText, Mode=TwoWay}"
-                             DelayedSearchCommand="{Binding ApplicationViewModel.Search}"
-                             />
-        </Grid>
-
-        
-        <Grid x:Name="MarginGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-
-            <Button Grid.Column="2" Grid.Row="1" 
-                    Command="{Binding NextResultPage}" 
-                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Background="Transparent"
-                    Style="{StaticResource FlatTileButton}" MinHeight="40" MaxHeight="20">
-                <controls:MonochromaticVectorImage Style="{StaticResource NextImage}"/>
-            </Button>
-            <Button Grid.Column="0" Grid.Row="1" 
-                    Command="{Binding PreviousResultPage}" 
-                    HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Background="Transparent"
-                    Style="{StaticResource FlatTileButton}" MinHeight="40" MaxHeight="20">
-                
-                <controls:MonochromaticVectorImage Style="{StaticResource BackImage}"/>
-            </Button>
-
-            <Grid x:Name="ContentGrid" Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-
-                <DockPanel Background="{StaticResource WindowBackgroundColorBrush}" Grid.Row="0">
-                    <Grid DockPanel.Dock="Top">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <DockPanel Grid.Row="0">
-                            
-                            <ListView DockPanel.Dock="Top" x:Name="SongsListView" 
-                  ItemsSource="{Binding SongResult, Mode=OneWay}" 
-                  Visibility="{Binding ElementName=SongsListView, Path=Items.Count, Converter={StaticResource CollapseOnZero}}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Title" Width="Auto">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Song">
-                                                    <Button Command="{Binding ElementName=SongsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding}"
-                                                Style="{StaticResource TransparentImageButton}">
-                                                        <TextBlock Style="{StaticResource UnderlinedOnMouseOver}"
-                                                       Text="{Binding Title}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Album" Width="Auto">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Song">
-                                                    <Button Command="{Binding ElementName=SongsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding Album}"
-                                                Style="{StaticResource TransparentImageButton}">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Image Source="{Binding Album.CoverUrl}" RenderOptions.BitmapScalingMode="Fant"/>
-                                                            <TextBlock Text="{Binding Album.Name}" VerticalAlignment="Center" Style="{StaticResource UnderlinedOnMouseOver}"/>
-                                                        </StackPanel>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Artist" Width="Auto">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Song">
-                                                    <Button Command="{Binding ElementName=SongsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding Album.Artist}"
-                                                Style="{StaticResource TransparentImageButton}">
-                                                        <TextBlock Style="{StaticResource UnderlinedOnMouseOver}" 
-                                                       Text="{Binding Path=Album.Artist.Name}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Length" Width="60" DisplayMemberBinding="{Binding Length, Converter={StaticResource TimeSpanConverter}}"/>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}">
-                                <TextBlock Text="Oops! Nothing more to display!">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource NormalText}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusSongs}"/>
-                                                        <Condition Binding="{Binding ElementName=SongsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusAny}"/>
-                                                        <Condition Binding="{Binding ElementName=SongsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Button>
-                        </DockPanel>
-
-
-
-                        <DockPanel Grid.Row="1">
-                            <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}"
-                                    Command="{Binding SetSearchFocus}" CommandParameter="{StaticResource SearchFocusAlbums}">
-                                <TextBlock Text="Albums" Style="{StaticResource UnderlinedOnMouseOver}"
-                                   Height="30"/>
-                            </Button>
-                            <ListView  DockPanel.Dock="Top" x:Name="AlbumsListView" 
-                  ItemsSource="{Binding AlbumResult, Mode=OneWay}" 
-                  Visibility="{Binding ElementName=AlbumsListView, Path=Items.Count, Converter={StaticResource CollapseOnZero}}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Name">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Album">
-                                                    <Button Style="{StaticResource TransparentImageButton}"
-                                                Command="{Binding ElementName=AlbumsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding}">
-                                                        <TextBlock Style="{StaticResource UnderlinedOnMouseOver}"
-                                                       Text="{Binding Name}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn Header="Artist">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Album">
-                                                    <Button Style="{StaticResource TransparentImageButton}"
-                                                Command="{Binding ElementName=AlbumsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding Artist}">
-                                                        <TextBlock Style="{StaticResource UnderlinedOnMouseOver}"
-                                                       Text="{Binding Artist.Name}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}">
-                                <TextBlock Text="Oops! Nothing more to display!">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource NormalText}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusAlbums}"/>
-                                                        <Condition Binding="{Binding ElementName=AlbumsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusAny}"/>
-                                                        <Condition Binding="{Binding ElementName=AlbumsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Button>
-                        </DockPanel>
-
-                        <DockPanel Grid.Row="2">
-                            <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}"
-                                    Command="{Binding SetSearchFocus}" CommandParameter="{StaticResource SearchFocusArtists}">
-                                <TextBlock Text="Artists" Style="{StaticResource UnderlinedOnMouseOver}"
-                                   Height="30"/>
-                            </Button>
-                            <ListView DockPanel.Dock="Top" x:Name="ArtistsListView" 
-                              ItemsSource="{Binding ArtistResult, Mode=OneWay}" 
-                              Visibility="{Binding ElementName=ArtistsListView, Path=Items.Count, Converter={StaticResource CollapseOnZero}}">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn Header="Name">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate DataType="model:Artist">
-                                                    <Button Style="{StaticResource TransparentImageButton}"
-                                                Command="{Binding ElementName=ArtistsListView, Path=DataContext.ApplicationViewModel.DisplayView}"
-                                                CommandParameter="{Binding}">
-                                                        <TextBlock Style="{StaticResource UnderlinedOnMouseOver}"
-                                                       Text="{Binding Name}"/>
-                                                    </Button>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}">
-                                <TextBlock Text="Oops! Nothing more to display!">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource NormalText}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusArtists}"/>
-                                                        <Condition Binding="{Binding ElementName=ArtistsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SearchFocus}" Value="{StaticResource SearchFocusAny}"/>
-                                                        <Condition Binding="{Binding ElementName=ArtistsListView, Path=Visibility}" Value="Collapsed"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Button>
-                        </DockPanel>
-
-                    </Grid>
-
-                    <TextBlock Style="{StaticResource MediumText}" Text="{Binding Page}" HorizontalAlignment="Center" VerticalAlignment="Bottom" DockPanel.Dock="Bottom"/>
-                </DockPanel>
-                <Button Command="{Binding CreateArtist, Mode=OneTime}"
-                    Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{StaticResource WindowBackgroundColorBrush}">
-                    <TextBlock Text="Add Artist" Style="{StaticResource MediumText}" />
-
-                </Button>
-            </Grid>
-
-        </Grid>
-    </DockPanel> -->
-
-
 
     <DockPanel>
 
@@ -361,6 +65,38 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            
+            
+            <StackPanel Grid.Column="0"
+                        Orientation="Vertical"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="15">
+                <Button Command="{Binding ApplicationViewModel.CreateView, Mode=OneTime}" 
+                        Style="{StaticResource FlatEuroButton}"
+                        Margin="0,0,0,20">
+                    <TextBlock Text="+Add Artist" Style="{StaticResource MediumText}" />
+                </Button>
+                <Button Command="{Binding SetSearchFocus}" 
+                        CommandParameter="{StaticResource SearchFocusSongs}"
+                        Style="{StaticResource FlatEuroButton}"
+                        Margin="0,0,0,10">
+                    <TextBlock Text="Songs" Style="{StaticResource MediumText}" />
+                </Button>
+                <Button Command="{Binding SetSearchFocus}" 
+                        CommandParameter="{StaticResource SearchFocusAlbums}"
+                        Style="{StaticResource FlatEuroButton}"
+                        Margin="0,0,0,10">
+                    <TextBlock Text="Albums" Style="{StaticResource MediumText}" />
+                </Button>
+                <Button Command="{Binding SetSearchFocus}" 
+                        CommandParameter="{StaticResource SearchFocusArtists}"
+                        Style="{StaticResource FlatEuroButton}"
+                        Margin="0,0,0,10">
+                    <TextBlock Text="Artists" Style="{StaticResource MediumText}" />
+                </Button>
+            </StackPanel>
+            
 
             <Button Grid.Column="2" Grid.Row="1" 
                     Command="{Binding NextResultPage}" 
@@ -390,17 +126,21 @@
                 </Grid.RowDefinitions>
 
 
-                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="0" 
+                              VerticalScrollBarVisibility="Auto"
+                              Background="{StaticResource WindowBackgroundColorBrush}">
 
 
-                    <DockPanel Background="{StaticResource WindowBackgroundColorBrush}" Grid.Row="0">
+                    <DockPanel Margin="20,0,20,0">
                         <Grid DockPanel.Dock="Top">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <DockPanel Grid.Row="0">
+                            <DockPanel Grid.Row="0"
+                                       Margin="0,20,0,0"
+                                       Visibility="{Binding ElementName=SongsListView, Path=Visibility}">
                                 <!--
                             <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}" HorizontalAlignment="Left"
                                     Command="{Binding SetSearchFocus}" CommandParameter="{StaticResource SearchFocusSongs}">
@@ -409,6 +149,10 @@
                             </Button>-->
 
 
+                                <TextBlock DockPanel.Dock="Top"
+                                           HorizontalAlignment="Left"
+                                           Text="Songs"
+                                           Style="{StaticResource MediumText}"/>
                                 <DataGrid DockPanel.Dock="Top" Name="SongsListView" ItemsSource="{Binding SongResult, Mode=OneWay}"
                                       HorizontalScrollBarVisibility="Disabled" BorderThickness="0,0,0,2" BorderBrush="{StaticResource LightControlBackgroundColorBrush}">
                                     <DataGrid.Columns>
@@ -483,9 +227,11 @@
 
                             </DockPanel>
 
+                            
 
-
-                            <DockPanel Grid.Row="1">
+                            <DockPanel Grid.Row="1" 
+                                       Margin="0,20,0,0"
+                                       Visibility="{Binding ElementName=AlbumsListView, Path=Visibility}">
                                 <!--
                             <Button DockPanel.Dock="Top" Style="{StaticResource TransparentImageButton}" HorizontalAlignment="Left"
                                     Command="{Binding SetSearchFocus}" CommandParameter="{StaticResource SearchFocusAlbums}">
@@ -493,7 +239,10 @@
                                    Height="30"/>
                             </Button> -->
 
-
+                                <TextBlock DockPanel.Dock="Top"
+                                           HorizontalAlignment="Left"
+                                           Text="Albums"
+                                           Style="{StaticResource MediumText}"/>
 
                                 <DataGrid Name="AlbumsListView" DockPanel.Dock="Top" ItemsSource="{Binding AlbumResult}"
                                       HorizontalScrollBarVisibility="Disabled" BorderThickness="0,0,0,2" BorderBrush="{StaticResource LightControlBackgroundColorBrush}">
@@ -559,7 +308,13 @@
                                 </DataGrid>
                             </DockPanel>
 
-                            <DockPanel Grid.Row="2">
+                            <DockPanel Grid.Row="2"
+                                       Margin="0,20,0,0"
+                                       Visibility="{Binding ElementName=ArtistsListView, Path=Visibility}">
+                                <TextBlock DockPanel.Dock="Top"
+                                           HorizontalAlignment="Left"
+                                           Text="Artists"
+                                           Style="{StaticResource MediumText}"/>
                                 <DataGrid Name="ArtistsListView" DockPanel.Dock="Top" ItemsSource="{Binding ArtistResult}"
                                       HorizontalScrollBarVisibility="Disabled" BorderThickness="0,0,0,2" BorderBrush="{StaticResource LightControlBackgroundColorBrush}">
                                     <DataGrid.Columns>
@@ -618,7 +373,7 @@
                     </Grid.RowDefinitions>
 
 
-                    <Button Command="{Binding ApplicationViewModel.CreateView, Mode=OneTime}"
+                    <!--<Button Command="{Binding ApplicationViewModel.CreateView, Mode=OneTime}"
                     Grid.Row="0" Grid.Column="3"  VerticalAlignment="Top" Background="{StaticResource WindowBackgroundColorBrush}">
                         <TextBlock Text="Add Artist" Style="{StaticResource MediumText}" />
                     </Button>
@@ -634,7 +389,7 @@
                     <Button Grid.Row="0" Grid.Column="0" Command="{Binding SetSearchFocus}" CommandParameter="{StaticResource SearchFocusArtists}"
                      VerticalAlignment="Top" Background="{StaticResource WindowBackgroundColorBrush}">
                         <TextBlock Text="Artists" Style="{StaticResource MediumText}" />
-                    </Button>
+                    </Button>-->
                 </Grid>
             </Grid>
         </Grid>
