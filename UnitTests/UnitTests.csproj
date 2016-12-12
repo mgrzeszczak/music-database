@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ArtistServiceTests.cs" />
+    <Compile Include="PasswordTests.cs" />
     <Compile Include="SongServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +71,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{826aa6a0-f2ce-4544-967b-2993aead7d10}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApi\WebApi.csproj">
+      <Project>{689b32fe-031b-4a63-aab0-4d4dd0c791fb}</Project>
+      <Name>WebApi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
