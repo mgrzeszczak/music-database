@@ -263,7 +263,8 @@
                                                     HorizontalAlignment="Right" 
                                                         VerticalAlignment="Center"
                                                     Background="Transparent"
-                                                        Visibility="{Binding Path=User,Converter={StaticResource AdminContentVisibilityConverter}}"
+                                                                                   Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                                                                        Path=DataContext.User,Converter={StaticResource AdminContentVisibilityConverter}}"
                                                     Style="{StaticResource FlatTileButton}" Margin="5" Height="30">
                                                     <controls:MonochromaticVectorImage Style="{StaticResource GarbageImage}"/>
                                                     <!--<TextBlock Text="Prev" Style="{StaticResource MediumText}"></TextBlock>-->
