@@ -114,7 +114,8 @@
                                 <ComboBox Name="RatingComboBox" MaxDropDownHeight="200" SelectedValue="{Binding Mode=TwoWay,Path=UserRating}" 
                                           DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right"></ComboBox>
                                 <TextBlock Text="Average score: " VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
-                                <TextBlock Text="{Binding AverageRating}" VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
+                                <TextBlock Text="{Binding AverageRating, Converter={StaticResource RatingConverter}}" 
+                                           VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
                             </StackPanel>
                         </DockPanel>
                     </StackPanel>

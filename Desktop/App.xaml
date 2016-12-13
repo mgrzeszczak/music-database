@@ -41,6 +41,7 @@
             <converters:NextPageButtonVisibilityConverter x:Key="NextPageButtonVisibilityConverter"/>
             <converters:PreviousPageButtonVisibilityConverter x:Key="PreviousPageButtonVisibilityConverter"/>
             <converters:AdminContentVisibilityConverter x:Key="AdminContentVisibilityConverter"/>
+            <converters:RatingConverter x:Key="RatingConverter"/>
 
 
             <Color x:Key="WindowBackgroundColor">#202020</Color>
