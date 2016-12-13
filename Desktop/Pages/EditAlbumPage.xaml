@@ -83,10 +83,8 @@
                             <TextBox MaxLength="255" DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" VerticalAlignment="Center" Name="TitleTextBox"
                                          Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}" >
                                 <TextBox.Text>
-                                    <Binding Path="Name" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
-                                        <Binding.ValidationRules>
-                                            <vr:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
-                                        </Binding.ValidationRules>
+                                    <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                        
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>

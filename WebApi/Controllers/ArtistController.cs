@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public Page<Artist> Search(string searchText, int pageNr = 1, int amountPerPage = 10)
         {
-            return artistService.SearchBy(searchText, pageNr, amountPerPage);
+            return artistService.SearchBy(searchText ?? "", pageNr, amountPerPage);
         }
 
         [Route("getWithAlbums/{id}")]

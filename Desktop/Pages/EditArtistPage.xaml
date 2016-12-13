@@ -66,10 +66,8 @@
                             <TextBox MaxLength="255" DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" VerticalAlignment="Bottom" Name="TitleTextBox"
                                          Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}">
                                 <TextBox.Text>
-                                    <Binding Path="Name" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
-                                        <Binding.ValidationRules>
-                                            <vr:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
-                                        </Binding.ValidationRules>
+                                    <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                        
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
@@ -114,7 +112,7 @@
                                 <TextBox 
                                     MaxLength="2000"
                                     TextWrapping="Wrap" xml:space="preserve"
-                                         Text="{Binding Description, Mode=TwoWay}"
+                                         Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          Margin="50,0,50,0"
                                          MinWidth="200"
                                          MinLines="3"

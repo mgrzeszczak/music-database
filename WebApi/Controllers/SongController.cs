@@ -47,7 +47,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public Page<Song> Search(string searchText, int pageNr = 1, int amountPerPage= 10)
         {
-            return songService.SearchBy(searchText, pageNr, amountPerPage);
+            return songService.SearchBy(searchText ?? "", pageNr, amountPerPage);
         }
 
         [Route("get/{id}")]

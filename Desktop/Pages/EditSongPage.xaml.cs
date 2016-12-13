@@ -27,5 +27,11 @@ namespace Desktop.Pages
             for (int i = 1; i <= 100; i++) numbers.Add(i);
             NumberComboBox.ItemsSource = numbers;
         }
+
+        private void EditSongPage_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
     }
 }

@@ -28,7 +28,7 @@ namespace Desktop.ViewModel
         protected override void InitializeCommands()
         {
             base.InitializeCommands();
-            Submit = new RelayCommand(o =>
+            Submit = new RelayCommand(o => Model != null && !string.IsNullOrEmpty(Model.Title != null ? Model.Title.Trim() : Model.Title),o =>
             {
                 ApplicationViewModel.RestClient.ExecuteAsync<Song>(ApplicationViewModel.RequestFactory.AddSongRequest(model),
                     (r, c) =>

@@ -34,7 +34,7 @@ namespace Desktop.ViewModel
 
         protected override void InitializeCommands()
         {
-            Submit = new RelayCommand(o => {
+            Submit = new RelayCommand(o => Model != null && !string.IsNullOrEmpty(Model.Name != null ? Model.Name.Trim() : Model.Name),o => {
                 ApplicationViewModel.RestClient.ExecuteAsync<Album>(ApplicationViewModel.RequestFactory.UpdateAlbumRequest(model),
                     (r, c) =>
                     {

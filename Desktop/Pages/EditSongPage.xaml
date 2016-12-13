@@ -8,7 +8,8 @@
              xmlns:controls="clr-namespace:Desktop.Controls"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1000">
+             d:DesignHeight="1000" d:DesignWidth="1000"
+             MouseDown="EditSongPage_OnMouseDown">
 
     <UserControl.Background>
         <ImageBrush Stretch="UniformToFill" ImageSource="../Resources/bg1.jpg"/>
@@ -78,10 +79,8 @@
                             <TextBox MaxLength="255" DockPanel.Dock="Left" MinWidth="200" MaxWidth="250" VerticalAlignment="Center" Name="TitleTextBox"
                                          Validation.ErrorTemplate="{StaticResource RedPopupErrorTemplate}" >
                                 <TextBox.Text>
-                                    <Binding Path="Title" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
-                                        <Binding.ValidationRules>
-                                            <vr:NonEmptyFieldValidationRule ValidationStep="RawProposedValue"/>
-                                        </Binding.ValidationRules>
+                                    <Binding Path="Title" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                        
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
@@ -133,7 +132,7 @@
                                 <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource MediumText}" Text="Youtube link: "></TextBlock>
                                 <TextBox Grid.Column="1" Grid.Row="6" >
                                     <TextBox.Text>
-                                        <Binding Path="YoutubeUrl" Mode="TwoWay">
+                                        <Binding Path="YoutubeUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <vr:YoutubeLinkValidationRule></vr:YoutubeLinkValidationRule>
                                             </Binding.ValidationRules>
@@ -152,7 +151,7 @@
                                     Padding="20,15,20,0">
                                     <TextBox  MaxLength="4000"
                                     TextWrapping="Wrap" xml:space="preserve"
-                                         Text="{Binding Lyrics, Mode=TwoWay}"
+                                         Text="{Binding Lyrics, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                          Margin="50,0,50,0"
                                          MinWidth="200"
                                          MinLines="3"

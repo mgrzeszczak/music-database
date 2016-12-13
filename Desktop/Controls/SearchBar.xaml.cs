@@ -214,8 +214,9 @@ namespace Desktop.Controls
         {
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
-                if (string.IsNullOrWhiteSpace(SearchText))
-                    return;
+                if (SearchText == null) SearchText = "";
+                //if (string.IsNullOrWhiteSpace(SearchText))
+                //    return;
                 if (searchEventDelayTimer.IsEnabled)
                     searchEventDelayTimer.Stop();
                 RaiseDelayedSearchEvent();

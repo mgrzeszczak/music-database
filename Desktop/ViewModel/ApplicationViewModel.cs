@@ -87,42 +87,42 @@ namespace Desktop.ViewModel
 
         public void HandlExceptionResponse(ExceptionResponse ex)
         {
-            
-            Console.WriteLine();
-            Console.WriteLine(ex.ErrorCode);
-            Console.WriteLine(ex.Message);
-            foreach (var e in ex.Errors) Console.WriteLine(e.Key+ " " +e.Value);
-            Console.WriteLine();
+            if (ex == null)
+            {
+                MessageBox.Show("Cannot connect to server.", "Error");
+                if (!(CurrentViewModel is LoginViewModel) && !(CurrentViewModel is RegisterViewModel)) ExecuteChangePage(new LoginViewModel(this, dataProvider));
+                return;
+            }
             
             switch (ex.ErrorCode)
             {
                 case Error.ARTIST_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Arist with that name already exists.", "Error");
+                    MessageBox.Show("Arist with that name already exists.", "Error");
                     break;
                 case Error.ALBUM_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that name for that artist.", "Error");
+                    MessageBox.Show("There already is an album with that name for that artist.", "Error");
                     break;
                 case Error.SONG_TITLE_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that title for that album.", "Error");
+                    MessageBox.Show("There already is a song with that title for that album.", "Error");
                     break;
                 case Error.SONG_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that number for that album.", "Error");
+                    MessageBox.Show("There already is a song with that number for that album.", "Error");
                     break;
                 case Error.ALBUM_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that number for that artist.", "Error");
+                    MessageBox.Show("There already is an album with that number for that artist.", "Error");
                     break;
                 case Error.UNKNOWN_ERROR:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Unknown error occured.", "Error");
+                    MessageBox.Show("Unknown error occured.", "Error");
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
                 case Error.VALIDATION_FAILED:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Validation failure.", "Error");
+                    MessageBox.Show("Email or password is invalid. Password must be at least 8 characters long, have at least 1 uppercase and lowercase character, at least one digit and at least one special character (!@#$%^&*).", "Error");
                     break;
                 case Error.LOGIN_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Login taken", "Error");
+                    MessageBox.Show("Login taken", "Error");
                     break;
                 case Error.INVALID_VERSION:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Object was edited in the meantime", "Error");
+                    MessageBox.Show("Object was edited in the meantime", "Error");
                     if (CurrentViewModel is EditSongViewModel)
                     {
                         ExecuteChangePage(new DisplaySongViewModel(this,dataProvider,(CurrentViewModel as DisplaySongViewModel).Model.Id));
@@ -135,10 +135,10 @@ namespace Desktop.ViewModel
                     }
                     break;
                 case Error.INVALID_CREDENTIALS:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Invalid login or password", "Error");
+                    MessageBox.Show("Invalid login or password", "Error");
                     break;
                 case Error.UNAUTHORIZED:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("You've been logged out.", "Error");
+                    MessageBox.Show("You've been logged out.", "Error");
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
             }
@@ -195,7 +195,7 @@ namespace Desktop.ViewModel
             get { return currentViewModel; }
             private set
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("testing");
+                
                 currentViewModel = value;
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
