@@ -5,6 +5,8 @@ using Common.Model;
 using Desktop.Cache;
 using Desktop.Command;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Common.Exception;
@@ -97,32 +99,68 @@ namespace Desktop.ViewModel
             switch (ex.ErrorCode)
             {
                 case Error.ARTIST_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Arist with that name already exists.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Artist with that name already exists.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.ALBUM_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that name for that artist.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that name for that artist.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.SONG_TITLE_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that title for that album.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that title for that album.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.SONG_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that number for that album.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that number for that album.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.ALBUM_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that number for that artist.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that number for that artist.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.UNKNOWN_ERROR:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Unknown error occured.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Unknown error occured.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
                 case Error.VALIDATION_FAILED:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Validation failure.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Validation failure.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.LOGIN_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Login taken", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Login taken", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.INVALID_VERSION:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Object was edited in the meantime", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Object was edited in the meantime", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     if (CurrentViewModel is EditSongViewModel)
                     {
                         ExecuteChangePage(new DisplaySongViewModel(this,dataProvider,(CurrentViewModel as DisplaySongViewModel).Model.Id));
@@ -135,10 +173,18 @@ namespace Desktop.ViewModel
                     }
                     break;
                 case Error.INVALID_CREDENTIALS:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Invalid login or password", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Invalid login or password", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.UNAUTHORIZED:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("You've been logged out.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("You've been logged out.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
             }
@@ -149,28 +195,56 @@ namespace Desktop.ViewModel
             switch (error)
             {
                 case Error.ARTIST_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Arist with that name already exists.","Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Artist with that name already exists.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.ALBUM_NAME_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that name for that artist.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that name for that artist.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.SONG_TITLE_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that title for that album.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that title for that album.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.SONG_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that number for that album.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is a song with that number for that album.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.ALBUM_NUMBER_TAKEN:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that number for that artist.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("There already is an album with that number for that artist.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     break;
                 case Error.UNKNOWN_ERROR:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("Unknown error occured.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("Unknown error occured.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     ExecuteChangePage(DefaultPage());
                     break;
                 case Error.VALIDATION_FAILED:
                     break;
                 case Error.UNAUTHORIZED:
-                    Xceed.Wpf.Toolkit.MessageBox.Show("You've been logged out.", "Error");
+                    Task.Factory.StartNew(
+                        () => Xceed.Wpf.Toolkit.MessageBox.Show("You've been logged out.", "Error"),
+                        CancellationToken.None,
+                        TaskCreationOptions.None,
+                        TaskScheduler.FromCurrentSynchronizationContext());
                     ExecuteChangePage(new LoginViewModel(this,dataProvider));
                     break;
             }
