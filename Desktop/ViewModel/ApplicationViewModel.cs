@@ -116,6 +116,11 @@ namespace Desktop.ViewModel
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
                 case Error.VALIDATION_FAILED:
+                    if (ex.Errors.ContainsKey("Content"))
+                    {
+                        MessageBox.Show("Comment cannot be empty.");
+                        break;
+                    }
                     MessageBox.Show("Email or password is invalid. Password must be at least 8 characters long, have at least 1 uppercase and lowercase character, at least one digit and at least one special character (!@#$%^&*).", "Error");
                     break;
                 case Error.LOGIN_TAKEN:

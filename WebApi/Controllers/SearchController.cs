@@ -31,9 +31,9 @@ namespace WebApi.Controllers
         [Route("all")]
         public CommonSearchResult Search(string searchText, int pageNr = 1, int amountPerPage = 10)
         {
-            return new CommonSearchResult(songService.SearchBy(searchText,pageNr,amountPerPage),
-                                          albumService.SearchBy(searchText, pageNr, amountPerPage),
-                                          artistService.SearchBy(searchText, pageNr, amountPerPage));
+            return new CommonSearchResult(songService.SearchBy(searchText??"",pageNr,amountPerPage),
+                                          albumService.SearchBy(searchText??"", pageNr, amountPerPage),
+                                          artistService.SearchBy(searchText??"", pageNr, amountPerPage));
         }
 
     }

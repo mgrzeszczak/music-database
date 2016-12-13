@@ -13,7 +13,9 @@ namespace Desktop.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan length = (TimeSpan)value;
-            return $"{length.Hours*60 + length.Minutes}:{length.Seconds}";
+            var minutes = length.Hours*60 + length.Minutes;
+            var secs = length.Seconds;
+            return $"{(minutes<10? minutes.ToString("00") : minutes.ToString())}:{(secs <10? secs.ToString("00") : secs.ToString())}";
             //return length.ToString(@"hh\:mm\:ss");
             //return length.ToString(@"h\h\ m\ \m\i\n\ s\s");
         }
