@@ -131,6 +131,7 @@
     <Compile Include="Converters\CollapseYoutubeOnEmptyLinkConverter.cs" />
     <Compile Include="Converters\GenreDisplayTextConverter.cs" />
     <Compile Include="Converters\InvisibleOnSearchFocusAny.cs" />
+    <Compile Include="Converters\RatingConverter.cs" />
     <Compile Include="Converters\TimeSpanConverter.cs" />
     <Compile Include="Converters\ViewModelToEditTitleConverter.cs" />
     <Compile Include="Data\IJsonSerializer.cs" />

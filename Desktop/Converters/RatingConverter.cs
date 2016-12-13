@@ -8,19 +8,27 @@ using System.Windows.Data;
 
 namespace Desktop.Converters
 {
-    class TimeSpanConverter : IValueConverter
+    public class RatingConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            TimeSpan length = (TimeSpan)value;
-            return $"{length.Hours*60 + length.Minutes}:{length.Seconds}";
-            //return length.ToString(@"hh\:mm\:ss");
-            //return length.ToString(@"h\h\ m\ \m\i\n\ s\s");
+            try
+            {
+                if (value == null)
+                    return 0;
+                return Math.Round((double)value, 1);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

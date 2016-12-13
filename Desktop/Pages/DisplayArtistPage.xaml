@@ -117,7 +117,8 @@
                                 <ComboBox Name="RatingComboBox" MaxDropDownHeight="200" SelectedValue="{Binding Mode=TwoWay,Path=UserRating}" 
                                           DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right"></ComboBox>
                                 <TextBlock Text="Average score: " VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
-                                <TextBlock Text="{Binding AverageRating}" VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
+                                <TextBlock Text="{Binding AverageRating, Converter={StaticResource RatingConverter}}" 
+                                           VerticalAlignment="Center" Style="{StaticResource MediumText}"></TextBlock>
                             </StackPanel>
                         </DockPanel>
                     </StackPanel>
@@ -305,7 +306,8 @@
                                                     HorizontalAlignment="Right" 
                                                         VerticalAlignment="Center"
                                                     Background="Transparent"
-                                                        Visibility="{Binding Path=User,Converter={StaticResource AdminContentVisibilityConverter}}"
+                                                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                                                                        Path=DataContext.User,Converter={StaticResource AdminContentVisibilityConverter}}"
                                                     Style="{StaticResource FlatTileButton}" Margin="5" Height="30">
                                                     <controls:MonochromaticVectorImage Style="{StaticResource GarbageImage}"/>
                                                     <!--<TextBlock Text="Prev" Style="{StaticResource MediumText}"></TextBlock>-->
