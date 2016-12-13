@@ -195,7 +195,6 @@ namespace Desktop.ViewModel
             get { return currentViewModel; }
             private set
             {
-                Xceed.Wpf.Toolkit.MessageBox.Show("testing");
                 currentViewModel = value;
                 OnPropertyChanged(nameof(CurrentViewModel));
             }
