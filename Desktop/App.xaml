@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Desktop"
              xmlns:vm="clr-namespace:Desktop.ViewModel"
              xmlns:converters="clr-namespace:Desktop.Converters"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
@@ -111,7 +112,7 @@
             <!-- Buttons -->
             <Style x:Key="TransparentImageButton" TargetType="Button">
                 <Setter Property="Background" Value="Transparent">
-                    
+
                 </Setter>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -201,7 +202,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
 
             <!--LISTVIEW-->
             <Style TargetType="ListView">
@@ -455,6 +455,29 @@
                     </Button>
                 </StackPanel>
             </ControlTemplate>
+
+
+
+            <!--Xceed.Wpf.Toolkit.MessageBox-->
+            <Style x:Key="MessageBoxButton" TargetType="Button" BasedOn="{StaticResource FlatTileButton}">
+                <Setter Property="Background" Value="{StaticResource DarkControlBackgroundColorBrush}"/>
+            </Style>
+            
+            <Style TargetType="{x:Type xctk:MessageBox}">
+                <Setter Property="Background" Value="{StaticResource WindowBackgroundColorBrush}"/>
+                <Setter Property="ButtonRegionBackground" Value="{StaticResource WindowBackgroundColorBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource LightFontColorBrush}"/>
+                <Setter Property="OkButtonStyle" Value="{StaticResource MessageBoxButton}"/>
+                <Setter Property="CancelButtonStyle" Value="{StaticResource MessageBoxButton}"/>
+                <Setter Property="NoButtonStyle" Value="{StaticResource MessageBoxButton}"/>
+                <Setter Property="YesButtonStyle" Value="{StaticResource MessageBoxButton}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource WindowBackgroundColorBrush}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="WindowBorderThickness" Value="0"/>
+                <Setter Property="WindowBackground" Value="{StaticResource LightControlBackgroundColorBrush}"/>
+                <Setter Property="CaptionForeground" Value="{StaticResource DarkFontColorBrush}"/>
+                <Setter Property="WindowThickness" Value="0"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
