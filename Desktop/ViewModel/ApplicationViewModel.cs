@@ -5,6 +5,8 @@ using Common.Model;
 using Desktop.Cache;
 using Desktop.Command;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Common.Exception;
@@ -85,11 +87,20 @@ namespace Desktop.ViewModel
             RegisterPage = new RelayCommand(o => ExecuteChangePage(new RegisterViewModel(this, dataProvider)));
         }
 
+        private void NiceBox(string msg,string title)
+        {
+            Task.Factory.StartNew(
+                () => Xceed.Wpf.Toolkit.MessageBox.Show(msg, title),
+                CancellationToken.None,
+                TaskCreationOptions.None,
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
         public void HandlExceptionResponse(ExceptionResponse ex)
         {
             if (ex == null)
             {
-                MessageBox.Show("Cannot connect to server.", "Error");
+                NiceBox("Cannot connect to server.", "Error");
                 if (!(CurrentViewModel is LoginViewModel) && !(CurrentViewModel is RegisterViewModel)) ExecuteChangePage(new LoginViewModel(this, dataProvider));
                 return;
             }
@@ -97,37 +108,37 @@ namespace Desktop.ViewModel
             switch (ex.ErrorCode)
             {
                 case Error.ARTIST_NAME_TAKEN:
-                    MessageBox.Show("Arist with that name already exists.", "Error");
+                    NiceBox("Arist with that name already exists.", "Error");
                     break;
                 case Error.ALBUM_NAME_TAKEN:
-                    MessageBox.Show("There already is an album with that name for that artist.", "Error");
+                    NiceBox("There already is an album with that name for that artist.", "Error");
                     break;
                 case Error.SONG_TITLE_TAKEN:
-                    MessageBox.Show("There already is a song with that title for that album.", "Error");
+                    NiceBox("There already is a song with that title for that album.", "Error");
                     break;
                 case Error.SONG_NUMBER_TAKEN:
-                    MessageBox.Show("There already is a song with that number for that album.", "Error");
+                    NiceBox("There already is a song with that number for that album.", "Error");
                     break;
                 case Error.ALBUM_NUMBER_TAKEN:
-                    MessageBox.Show("There already is an album with that number for that artist.", "Error");
+                    NiceBox("There already is an album with that number for that artist.", "Error");
                     break;
                 case Error.UNKNOWN_ERROR:
-                    MessageBox.Show("Unknown error occured.", "Error");
+                    NiceBox("Unknown error occured.", "Error");
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
                 case Error.VALIDATION_FAILED:
                     if (ex.Errors.ContainsKey("Content"))
                     {
-                        MessageBox.Show("Comment cannot be empty.");
+                        NiceBox("Comment cannot be empty.","Error");
                         break;
                     }
-                    MessageBox.Show("Email or password is invalid. Password must be at least 8 characters long, have at least 1 uppercase and lowercase character, at least one digit and at least one special character (!@#$%^&*).", "Error");
+                    NiceBox("Email or password is invalid. Password must be at least 8 characters long, have at least 1 uppercase and lowercase character, at least one digit and at least one special character (!@#$%^&*).", "Error");
                     break;
                 case Error.LOGIN_TAKEN:
-                    MessageBox.Show("Login taken", "Error");
+                    NiceBox("Login taken", "Error");
                     break;
                 case Error.INVALID_VERSION:
-                    MessageBox.Show("Object was edited in the meantime", "Error");
+                    NiceBox("Object was edited in the meantime", "Error");
                     if (CurrentViewModel is EditSongViewModel)
                     {
                         ExecuteChangePage(new DisplaySongViewModel(this,dataProvider,(CurrentViewModel as DisplaySongViewModel).Model.Id));
@@ -140,10 +151,10 @@ namespace Desktop.ViewModel
                     }
                     break;
                 case Error.INVALID_CREDENTIALS:
-                    MessageBox.Show("Invalid login or password", "Error");
+                    NiceBox("Invalid login or password", "Error");
                     break;
                 case Error.UNAUTHORIZED:
-                    MessageBox.Show("You've been logged out.", "Error");
+                    NiceBox("You've been logged out.", "Error");
                     ExecuteChangePage(new LoginViewModel(this, dataProvider));
                     break;
             }
